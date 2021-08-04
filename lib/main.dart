@@ -31,24 +31,27 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
+        width: screenWidth,
+        height: screenHeight,
         child: SizedBox.expand(
             child: Container(
           color: Color.fromARGB(255, 0, 20, 199),
           child: DefaultTextStyle(
-            style: const TextStyle(
+            style: TextStyle(
               color: Colors.white,
-              fontSize: 175.0,
+              fontSize: screenWidth / 8,
               fontFamily: 'Blockstepped',
             ),
             child: AnimatedTextKit(
               animatedTexts: [
                 TypewriterAnimatedText('peluso.dev',
-                    speed: const Duration(milliseconds: 200)),
+                    speed: const Duration(milliseconds: 300)),
               ],
               isRepeatingAnimation: false,
               onTap: () {},
