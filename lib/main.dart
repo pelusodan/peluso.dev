@@ -56,19 +56,35 @@ class _MyHomePageState extends State<MyHomePage> {
             toolbarHeight: screenHeight / 6,
             actions: [
               Padding(
-                padding: EdgeInsets.only(right: screenWidth / 8),
-                child: IconButton(
-                    onPressed: () {
-                      js.context
-                          .callMethod('open', ['https://github.com/pelusodan']);
-                    },
-                    icon: FaIcon(
-                        FontAwesomeIcons.github,
-                        color: Colors.white,
-                        size: screenWidth / 20
-                    )
-                ),
-              )
+                  padding: EdgeInsets.only(
+                      right: screenWidth / 16, bottom: screenHeight / 20),
+                  child: Row(
+                    children: [
+                      IconButton(
+                          constraints: BoxConstraints(
+                              minHeight: screenWidth / 20,
+                              minWidth: screenWidth / 20),
+                          onPressed: () {
+                            js.context.callMethod(
+                                'open', ['https://github.com/pelusodan']);
+                          },
+                          icon: FaIcon(FontAwesomeIcons.github,
+                              color: Colors.white, size: screenWidth / 20)),
+                      SizedBox(
+                        width: screenWidth / 40,
+                      ),
+                      IconButton(
+                          constraints: BoxConstraints(
+                              minHeight: screenWidth / 20,
+                              minWidth: screenWidth / 20),
+                          onPressed: () {
+                            js.context.callMethod('open',
+                                ['https://www.linkedin.com/in/pelusodan/']);
+                          },
+                          icon: FaIcon(FontAwesomeIcons.linkedin,
+                              color: Colors.white, size: screenWidth / 20)),
+                    ],
+                  )),
             ],
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: false,
@@ -80,12 +96,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 child: AnimatedTextKit(
                   animatedTexts: [
-                    TypewriterAnimatedText(
-                        'peluso.dev',
-                        speed: Duration(
-                            milliseconds: 300
-                        )
-                    ),
+                    TypewriterAnimatedText('peluso.dev',
+                        speed: Duration(milliseconds: 300)),
                   ],
                   isRepeatingAnimation: false,
                 ),
