@@ -41,13 +41,18 @@ class _MyHomePageState extends State<MyHomePage> {
     bool _snap = false;
     bool _floating = false;
     var deepBlue = Color.fromARGB(255, 0, 20, 199);
+    var vapePink = Color.fromARGB(255, 255, 113, 206);
+    var vapeBlue = Color.fromARGB(255, 1, 205, 254);
+    var vapeGreen = Color.fromARGB(255, 5, 255, 161);
+    var vapePurple = Color.fromARGB(255, 185, 103, 255);
+    var vapeYellow = Color.fromARGB(255, 255, 251, 150);
 
     return Scaffold(
       backgroundColor: deepBlue,
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
-            backgroundColor: deepBlue,
+            backgroundColor: vapePurple,
             pinned: _pinned,
             snap: _snap,
             floating: _floating,
@@ -61,28 +66,32 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Row(
                     children: [
                       IconButton(
-                          constraints: BoxConstraints(
-                              minHeight: screenWidth / 20,
-                              minWidth: screenWidth / 20),
-                          onPressed: () {
-                            js.context.callMethod(
-                                'open', ['https://github.com/pelusodan']);
-                          },
-                          icon: FaIcon(FontAwesomeIcons.github,
-                              color: Colors.white, size: screenWidth / 20)),
+                        constraints: BoxConstraints(
+                            minHeight: screenWidth / 20,
+                            minWidth: screenWidth / 20),
+                        onPressed: () {
+                          js.context.callMethod(
+                              'open', ['https://github.com/pelusodan']);
+                        },
+                        icon: FaIcon(FontAwesomeIcons.github,
+                            color: vapeYellow, size: screenWidth / 20),
+                        hoverColor: vapeGreen,
+                      ),
                       SizedBox(
                         width: screenWidth / 40,
                       ),
                       IconButton(
-                          constraints: BoxConstraints(
-                              minHeight: screenWidth / 20,
-                              minWidth: screenWidth / 20),
-                          onPressed: () {
-                            js.context.callMethod('open',
-                                ['https://www.linkedin.com/in/pelusodan/']);
-                          },
-                          icon: FaIcon(FontAwesomeIcons.linkedin,
-                              color: Colors.white, size: screenWidth / 20)),
+                        constraints: BoxConstraints(
+                            minHeight: screenWidth / 20,
+                            minWidth: screenWidth / 20),
+                        onPressed: () {
+                          js.context.callMethod('open',
+                              ['https://www.linkedin.com/in/pelusodan/']);
+                        },
+                        icon: FaIcon(FontAwesomeIcons.linkedin,
+                            color: vapeYellow, size: screenWidth / 20),
+                        hoverColor: vapeGreen,
+                      ),
                     ],
                   )),
             ],
@@ -90,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
               centerTitle: false,
               title: DefaultTextStyle(
                 style: TextStyle(
-                  color: Colors.white,
+                  color: vapeYellow,
                   fontSize: screenHeight / 8,
                   fontFamily: 'Blockstepped',
                 ),
@@ -108,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
                 return Container(
-                  color: index.isOdd ? Colors.white : deepBlue,
+                  color: index.isOdd ? vapePurple : vapeYellow,
                   height: 100.0,
                   child: Center(
                     child: Text('$index', textScaleFactor: 5),
