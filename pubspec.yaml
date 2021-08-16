@@ -16,6 +16,7 @@ dependencies:
   animated_text_kit: ^4.2.1
   font_awesome_flutter: ^9.1.0
   animated_background: ^2.0.0
+  flutter95: ^1.0.0
 
 dev_dependencies:
   flutter_test:
