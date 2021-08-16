@@ -27,6 +27,8 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
+  assets:
+    - assets/img/old_school_profile.jpg
   fonts:
     - family: Blockstepped
       fonts:
