@@ -40,12 +40,12 @@ class _MyHomePageState extends State<MyHomePage> {
     bool _pinned = true;
     bool _snap = false;
     bool _floating = false;
-    var deepBlue = Color.fromARGB(255, 0, 20, 199);
-    var vapePink = Color.fromARGB(255, 255, 113, 206);
-    var vapeBlue = Color.fromARGB(255, 1, 205, 254);
-    var vapeGreen = Color.fromARGB(255, 5, 255, 161);
-    var vapePurple = Color.fromARGB(255, 185, 103, 255);
-    var vapeYellow = Color.fromARGB(255, 255, 251, 150);
+    var deepBlue = const Color.fromARGB(255, 0, 20, 199);
+    var vapePink = const Color.fromARGB(255, 255, 113, 206);
+    var vapeBlue = const Color.fromARGB(255, 1, 205, 254);
+    var vapeGreen = const Color.fromARGB(255, 5, 255, 161);
+    var vapePurple = const Color.fromARGB(255, 185, 103, 255);
+    var vapeYellow = const Color.fromARGB(255, 255, 251, 150);
 
     return Scaffold(
       backgroundColor: deepBlue,
@@ -75,7 +75,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         },
                         icon: FaIcon(FontAwesomeIcons.github,
                             color: vapeYellow, size: screenWidth / 20),
-                        hoverColor: vapeGreen,
                       ),
                       SizedBox(
                         width: screenWidth / 40,
@@ -90,7 +89,21 @@ class _MyHomePageState extends State<MyHomePage> {
                         },
                         icon: FaIcon(FontAwesomeIcons.linkedin,
                             color: vapeYellow, size: screenWidth / 20),
-                        hoverColor: vapeGreen,
+                      ),
+                      SizedBox(
+                        width: screenWidth / 40,
+                      ),
+                      IconButton(
+                        constraints: BoxConstraints(
+                            minHeight: screenWidth / 20,
+                            minWidth: screenWidth / 20),
+                        onPressed: () {
+                          //TODO: launch a new page for other concepts
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => NewConceptScreen()));
+                        },
+                        icon: FaIcon(FontAwesomeIcons.conciergeBell,
+                            color: vapeYellow, size: screenWidth / 20),
                       ),
                     ],
                   )),
@@ -106,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: AnimatedTextKit(
                   animatedTexts: [
                     TypewriterAnimatedText('peluso.dev',
-                        speed: Duration(milliseconds: 300)),
+                        speed: const Duration(milliseconds: 300)),
                   ],
                   isRepeatingAnimation: false,
                 ),
@@ -130,5 +143,120 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
     );
+  }
+}
+
+class NewConceptScreen extends StatefulWidget {
+  const NewConceptScreen({Key? key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => _NewConceptScreenState();
+}
+
+class _NewConceptScreenState extends State<NewConceptScreen> {
+
+  int selectionIndex = 0;
+
+
+  @override
+  Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    var style = TextStyle(color: Colors.white, fontSize: screenHeight / 12);
+
+    return Material(
+      type: MaterialType.transparency,
+      child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                fit: BoxFit.cover,
+                image: getImageFromSelection(selectionIndex)),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: screenHeight / 20,
+              ),
+              Text(
+                'peluso.dev',
+                style:
+                TextStyle(color: Colors.white, fontSize: screenHeight / 6),
+              ),
+              SizedBox(
+                width: screenWidth,
+                height: screenHeight / 3,
+                child: ListWheelScrollView(
+                    onSelectedItemChanged: (index){
+                      print("index is " + index.toString());
+                      setBackground(index);
+                    },
+                    physics: FixedExtentScrollPhysics(),
+                    itemExtent: 100,
+                    perspective: .01,
+                    children: [
+                      TextButton(
+                          onPressed: () {
+                          },
+                          child: Text(
+                            "front end developer",
+                            style: style,
+                          )),
+                      TextButton(
+                          onPressed: () {
+                          },
+                          child: Text(
+                            "hardware engineer",
+                            style: style,
+                          )),
+                      TextButton(
+                          onPressed: () {
+                          },
+                          child: Text(
+                            "adventurer",
+                            style: style,
+                          )),
+                      TextButton(
+                          onPressed: () {
+                          },
+                          child: Text(
+                            "indie rocker",
+                            style: style,
+                          )),
+                    ]),
+              )
+            ],
+          )),
+    );
+  }
+
+  ExactAssetImage getImageFromSelection(int selectionIndex) {
+    var image =  const ExactAssetImage('img/camp_dark.jpg');
+    switch (selectionIndex) {
+      case 0: {
+        image =  const ExactAssetImage('img/camp_dark.jpg');
+      }
+      break;
+      case 1: {
+        image =  const ExactAssetImage('img/water_arches.jpg');
+      }
+      break;
+      case 2: {
+        image =  const ExactAssetImage('img/narrows.jpg');
+      }
+      break;
+      case 3: {
+        image =  const ExactAssetImage('img/cv.jpg');
+      }
+      break;
+    }
+    return image;
+  }
+
+  void setBackground(int index) {
+    setState(() {
+      selectionIndex = index;
+    });
   }
 }
