@@ -32,63 +32,35 @@ class MainScreen extends StatelessWidget {
         ),
         Item95(
           label: 'Save',
+          onTap: (context) {},
         ),
       ]),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 4.0),
         child: Elevation95(
           type: Elevation95Type.down,
-          child: Column(
-            children: <Widget>[
-              const SizedBox(height: 4),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Button95(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => ScreenThatCanPop()));
-                    },
-                    child: Text('Button95'),
-                  ),
-                  Button95(
-                    child: Text('Disabled'),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 4),
-              Text(
-                'Text with Flutter95.textStyle',
-                style: Flutter95.textStyle,
-              ),
-              const SizedBox(height: 4),
-              Button95(
-                onTap: () {
-                  showDialog95(
-                    context: context,
-                    title: 'Error',
-                    message: 'Task failed successfully',
-                  );
-                },
-                child: Text('Show Error'),
-              ),
-              const SizedBox(height: 4),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: TextField95(),
-              ),
-              const SizedBox(height: 4),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: TextField95(
-                  height: 150,
-                  maxLines: 10,
-                  multiline: true,
-                ),
-              ),
-              _buildListView(),
-            ],
-          ),
+          child: SingleChildScrollView(
+            child: Stack(
+              children: <Widget>[
+                Scaffold95(
+                    title: "About",
+                    body: Row(
+                      children: [
+                        Image.asset(
+                          'img/old_school_profile.jpg',
+                          width: 500,
+                          height: 500,
+                        ),
+                        Text(
+                          'mobile developer \nhardware engineer \nmusician',
+                          style: Flutter95.textStyle,
+                        )
+                      ],
+                    )
+                )
+              ],
+            ),
+          )
         ),
       ),
     );
