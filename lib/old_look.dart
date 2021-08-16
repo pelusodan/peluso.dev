@@ -38,30 +38,47 @@ class MainScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 4.0),
         child: Elevation95(
-          type: Elevation95Type.down,
-          child: SingleChildScrollView(
-            child: Stack(
-              children: <Widget>[
-                Scaffold95(
-                    title: "About",
-                    body: Row(
-                      children: [
-                        Image.asset(
-                          'img/old_school_profile.jpg',
-                          width: 500,
-                          height: 500,
-                        ),
-                        Text(
-                          'mobile developer \nhardware engineer \nmusician',
-                          style: Flutter95.textStyle,
-                        )
-                      ],
-                    )
-                )
-              ],
-            ),
-          )
-        ),
+            type: Elevation95Type.down,
+            child: SingleChildScrollView(
+              child: Stack(
+                children: <Widget>[
+                  Elevation95(
+                    child: Scaffold95(
+                      title: "About",
+                      toolbar: Toolbar95(
+                        actions: [
+                          Item95(
+                            label: 'socials',
+                            menu: Menu95(
+                                items: [
+                                  MenuItem95(value: 1, label: 'github'),
+                                  MenuItem95(value: 2, label: 'linkedin'),
+                                  MenuItem95(value: 3, label: 'twitter')
+                                ],
+                                onItemSelected: (item) {
+                                  //TODO
+                                }),
+                          )
+                        ],
+                      ),
+                      body: Row(
+                        children: [
+                          Image.asset(
+                            'img/old_school_profile.jpg',
+                            width: 500,
+                            height: 500,
+                          ),
+                          Text(
+                            'mobile developer \nhardware engineer \nmusician',
+                            style: Flutter95.textStyle,
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            )),
       ),
     );
   }
