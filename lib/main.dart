@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:js' as js;
 
+import 'package:pelusodan_dev/old_look.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -84,8 +86,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             minHeight: screenWidth / 20,
                             minWidth: screenWidth / 20),
                         onPressed: () {
-                          js.context.callMethod('open',
-                              ['https://www.linkedin.com/in/pelusodan/']);
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => Flutter95App()));
                         },
                         icon: FaIcon(FontAwesomeIcons.linkedin,
                             color: vapeYellow, size: screenWidth / 20),
