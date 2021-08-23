@@ -17,32 +17,56 @@ class Flutter95App extends StatelessWidget {
 }
 
 class MainScreen extends StatelessWidget {
+  var accepted = false;
+
+
   @override
   Widget build(BuildContext context) {
+    var deepBlue = Color.fromARGB(255, 7, 19, 205);
     return Scaffold95(
-      title: 'Flutter95',
-      toolbar: Toolbar95(actions: [
-        Item95(
-          label: 'File',
-          menu: _buildMenu(),
-        ),
-        Item95(
-          label: 'Edit',
-          onTap: (context) {},
-        ),
-        Item95(
-          label: 'Save',
-          onTap: (context) {},
-        ),
-      ]),
-      body: Padding(
+        title: 'Flutter95',
+        toolbar: Toolbar95(actions: [
+          Item95(
+            label: 'File',
+            menu: _buildMenu(),
+          ),
+          Item95(
+            label: 'Edit',
+            onTap: (context) {},
+          ),
+          Item95(
+            label: 'Save',
+            onTap: (context) {},
+          ),
+        ]),
+        body: Container(
+          width: 800,
+          height: 800,
+          child: Stack(
+            children: [
+              Card(
+                color: Colors.blueAccent,
+                child: buildDragTarget(),
+              ),
+              buildAbout(),
+            ],
+          ),
+        ));
+  }
+
+  /**/
+
+  /*
+  * Padding(
         padding: const EdgeInsets.symmetric(horizontal: 4.0),
         child: Elevation95(
             type: Elevation95Type.down,
             child: SingleChildScrollView(
               child: Stack(
                 children: <Widget>[
-                  Elevation95(
+                  Container(
+                    width: 500,
+                    height: 300,
                     child: Scaffold95(
                       title: "About",
                       toolbar: Toolbar95(
@@ -64,9 +88,9 @@ class MainScreen extends StatelessWidget {
                       body: Row(
                         children: [
                           Image.asset(
-                            'img/old_school_profile.jpg',
-                            width: 500,
-                            height: 500,
+                            'img/header_dan.png',
+                            width: 190,
+                            height: 190,
                           ),
                           Text(
                             'mobile developer \nhardware engineer \nmusician',
@@ -80,8 +104,7 @@ class MainScreen extends StatelessWidget {
               ),
             )),
       ),
-    );
-  }
+  * */
 
   Menu95 _buildMenu() {
     return Menu95(
@@ -133,6 +156,118 @@ class MainScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget buildAbout() {
+    return Draggable(
+      data: 'about_window',
+      child: Elevation95(
+          type: Elevation95Type.down,
+          child: SingleChildScrollView(
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  width: 500,
+                  height: 300,
+                  child: Scaffold95(
+                    title: "About",
+                    toolbar: Toolbar95(
+                      actions: [
+                        Item95(
+                          label: 'socials',
+                          menu: Menu95(
+                              items: [
+                                MenuItem95(value: 1, label: 'github'),
+                                MenuItem95(value: 2, label: 'linkedin'),
+                                MenuItem95(value: 3, label: 'twitter')
+                              ],
+                              onItemSelected: (item) {
+                                //TODO
+                              }),
+                        )
+                      ],
+                    ),
+                    body: Row(
+                      children: [
+                        Image.asset(
+                          'img/header_dan.png',
+                          width: 190,
+                          height: 190,
+                        ),
+                        Text(
+                          'mobile developer \nhardware engineer \nmusician',
+                          style: Flutter95.textStyle,
+                        )
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+          )),
+      feedback: Elevation95(
+          type: Elevation95Type.down,
+          child: SingleChildScrollView(
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  width: 500,
+                  height: 300,
+                  child: Scaffold95(
+                    title: "About",
+                    toolbar: Toolbar95(
+                      actions: [
+                        Item95(
+                          label: 'socials',
+                          menu: Menu95(
+                              items: [
+                                MenuItem95(value: 1, label: 'github'),
+                                MenuItem95(value: 2, label: 'linkedin'),
+                                MenuItem95(value: 3, label: 'twitter')
+                              ],
+                              onItemSelected: (item) {
+                                //TODO
+                              }),
+                        )
+                      ],
+                    ),
+                    body: Row(
+                      children: [
+                        Image.asset(
+                          'img/header_dan.png',
+                          width: 190,
+                          height: 190,
+                        ),
+                        Text(
+                          'mobile developer \nhardware engineer \nmusician',
+                          style: Flutter95.textStyle,
+                        )
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+          )),
+      childWhenDragging: Container(),
+    );
+  }
+
+  Widget buildDragTarget() {
+    return DragTarget(
+      builder: (context, List<String?> candidateData, rejectedData) {
+        return accepted ? buildAbout() : Container();
+      },
+      onAccept: (data) {
+        accepted = true;
+      },
+      onWillAccept: (data) {
+        return true;
+      },
+      onLeave: (data){
+        accepted =  false;
+      },
     );
   }
 }
