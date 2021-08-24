@@ -20,7 +20,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'peluso.dev',
       theme: ThemeData(scaffoldBackgroundColor: Colors.lightBlue),
-      home: const MyHomePage(title: 'peluso.dev'),
+      //home: const MyHomePage(title: 'peluso.dev'),
+      home: const Flutter95Stateful(
+        title: "Flutter95",
+      ),
     );
   }
 }
@@ -43,9 +46,6 @@ class _MyHomePageState extends State<MyHomePage> {
     bool _snap = false;
     bool _floating = false;
     var deepBlue = const Color.fromARGB(255, 0, 20, 199);
-    var vapePink = const Color.fromARGB(255, 255, 113, 206);
-    var vapeBlue = const Color.fromARGB(255, 1, 205, 254);
-    var vapeGreen = const Color.fromARGB(255, 5, 255, 161);
     var vapePurple = const Color.fromARGB(255, 185, 103, 255);
     var vapeYellow = const Color.fromARGB(255, 255, 251, 150);
 
@@ -156,9 +156,7 @@ class NewConceptScreen extends StatefulWidget {
 }
 
 class _NewConceptScreenState extends State<NewConceptScreen> {
-
   int selectionIndex = 0;
-
 
   @override
   Widget build(BuildContext context) {
@@ -184,13 +182,13 @@ class _NewConceptScreenState extends State<NewConceptScreen> {
               Text(
                 'peluso.dev',
                 style:
-                TextStyle(color: Colors.white, fontSize: screenHeight / 6),
+                    TextStyle(color: Colors.white, fontSize: screenHeight / 6),
               ),
               SizedBox(
                 width: screenWidth,
                 height: screenHeight / 3,
                 child: ListWheelScrollView(
-                    onSelectedItemChanged: (index){
+                    onSelectedItemChanged: (index) {
                       print("index is " + index.toString());
                       setBackground(index);
                     },
@@ -199,29 +197,25 @@ class _NewConceptScreenState extends State<NewConceptScreen> {
                     perspective: .01,
                     children: [
                       TextButton(
-                          onPressed: () {
-                          },
+                          onPressed: () {},
                           child: Text(
                             "front end developer",
                             style: style,
                           )),
                       TextButton(
-                          onPressed: () {
-                          },
+                          onPressed: () {},
                           child: Text(
                             "hardware engineer",
                             style: style,
                           )),
                       TextButton(
-                          onPressed: () {
-                          },
+                          onPressed: () {},
                           child: Text(
                             "adventurer",
                             style: style,
                           )),
                       TextButton(
-                          onPressed: () {
-                          },
+                          onPressed: () {},
                           child: Text(
                             "indie rocker",
                             style: style,
@@ -234,24 +228,28 @@ class _NewConceptScreenState extends State<NewConceptScreen> {
   }
 
   ExactAssetImage getImageFromSelection(int selectionIndex) {
-    var image =  const ExactAssetImage('img/camp_dark.jpg');
+    var image = const ExactAssetImage('img/camp_dark.jpg');
     switch (selectionIndex) {
-      case 0: {
-        image =  const ExactAssetImage('img/camp_dark.jpg');
-      }
-      break;
-      case 1: {
-        image =  const ExactAssetImage('img/water_arches.jpg');
-      }
-      break;
-      case 2: {
-        image =  const ExactAssetImage('img/narrows.jpg');
-      }
-      break;
-      case 3: {
-        image =  const ExactAssetImage('img/cv.jpg');
-      }
-      break;
+      case 0:
+        {
+          image = const ExactAssetImage('img/camp_dark.jpg');
+        }
+        break;
+      case 1:
+        {
+          image = const ExactAssetImage('img/water_arches.jpg');
+        }
+        break;
+      case 2:
+        {
+          image = const ExactAssetImage('img/narrows.jpg');
+        }
+        break;
+      case 3:
+        {
+          image = const ExactAssetImage('img/cv.jpg');
+        }
+        break;
     }
     return image;
   }
