@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter95/flutter95.dart';
 
 void main() {
@@ -22,12 +24,21 @@ class IndexedWindow {
 }
 
 class _Flutter95State extends State<Flutter95Stateful> {
-  List<int> windowIds = [0, 1, 2];
+  /**
+   * This keeps track of the windows on our screen
+   */
+  List<int> windowIds = [0, 1, 99];
 
   Offset aboutPosition = Offset(100, 100);
   Offset contactMePosition = Offset(200, 200);
   double prevScale = 1;
   double scale = 1;
+
+  String? currentEmail;
+
+  String? currentMessage;
+
+  String? currentName;
 
   void updateScale(double zoom) => setState(() => scale = prevScale * zoom);
 
@@ -43,6 +54,11 @@ class _Flutter95State extends State<Flutter95Stateful> {
         contactMePosition = newPosition;
         windowIds.remove(2);
         windowIds.add(2);
+      });
+
+  void updateStaticContactPosition() => setState(() {
+        windowIds.remove(99);
+        windowIds.add(99);
       });
 
   var accepted = false;
@@ -69,19 +85,23 @@ class _Flutter95State extends State<Flutter95Stateful> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    return Scaffold95(
-        title: 'Flutter95',
-        toolbar: mainToolbar(),
-        body: Container(
-            width: screenWidth,
-            height: screenHeight - verticalOffset,
-            child: GestureDetector(
-              onScaleUpdate: (details) => updateScale(details.scale),
-              onScaleEnd: (_) => commitScale(),
-              child: Stack(
-                  children:
-                      windowIds.map((e) => generateWidgetFromId(e)).toList()),
-            )));
+    return Material(
+      type: MaterialType.transparency,
+      child: Scaffold95(
+          title: 'peluso.dev',
+          toolbar: mainToolbar(),
+          body: Container(
+              width: screenWidth,
+              height: screenHeight - verticalOffset,
+              child: GestureDetector(
+                onScaleUpdate: (details) => updateScale(details.scale),
+                onScaleEnd: (_) => commitScale(),
+                child: Stack(
+                    children: windowIds
+                        .map((e) => generateWidgetFromId(e, context))
+                        .toList()),
+              ))),
+    );
   }
 
   Menu95 _buildMenu() {
@@ -124,9 +144,9 @@ class _Flutter95State extends State<Flutter95Stateful> {
       data: 'contact_window',
       child: Transform.scale(
         scale: scale,
-        child: buildAboutWindowContent(),
+        child: buildContactMeContent(),
       ),
-      feedback: buildAboutWindowContent(),
+      feedback: buildContactMeContent(),
       childWhenDragging: Container(),
       onDragEnd: (details) => updateContactPosition(details.offset),
     );
@@ -179,8 +199,30 @@ class _Flutter95State extends State<Flutter95Stateful> {
         ));
   }
 
-  Widget generateWidgetFromId(int e) {
-    //TODO: give the correct window from the index
+  Widget buildContactMeContent() {
+    return GestureDetector(
+      child: Elevation95(
+          type: Elevation95Type.down,
+          child: SingleChildScrollView(
+            child: Stack(
+              children: <Widget>[
+                Container(
+                    width: 500,
+                    height: 500,
+                    child: Scaffold95(
+                      title: "Contact Me",
+                      body: buildContactMeForm(),
+                    )),
+              ],
+            ),
+          )),
+      onTap: () {
+        updateStaticContactPosition();
+      },
+    );
+  }
+
+  Widget generateWidgetFromId(int e, BuildContext context) {
     if (e == 0) {
       return Positioned.fill(
           child: Container(
@@ -198,9 +240,100 @@ class _Flutter95State extends State<Flutter95Stateful> {
         left: contactMePosition.dx,
         top: contactMePosition.dy - verticalOffset,
       );
+    } else if (e == 99) {
+      //This serves as the contact form which cannot move
+      return Positioned(
+        child: buildContactMeContent(),
+        bottom: 50,
+        right: 20,
+      );
     } else {
       return Container();
     }
+  }
+
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final messageController = TextEditingController();
+  final subjectController = TextEditingController();
+
+  Widget buildContactMeForm() {
+    return Container(
+      margin: const EdgeInsets.all(20),
+      child: Column(children: [
+        Row(
+          children: [
+            Text("name",
+                style:
+                    Flutter95.textStyle.copyWith(fontWeight: FontWeight.bold)),
+            Expanded(
+                child: Container(
+              child: TextField95(
+                controller: nameController,
+              ),
+              margin: const EdgeInsets.all(10),
+            )),
+          ],
+        ),
+        Row(
+          children: [
+            Text("email",
+                style:
+                    Flutter95.textStyle.copyWith(fontWeight: FontWeight.bold)),
+            Expanded(
+                child: Container(
+              child: TextField95(
+                controller: emailController,
+              ),
+              margin: const EdgeInsets.all(10),
+            )),
+          ],
+        ),
+        Row(
+          children: [
+            Text("subject",
+                style:
+                    Flutter95.textStyle.copyWith(fontWeight: FontWeight.bold)),
+            Expanded(
+                child: Container(
+              child: TextField95(
+                controller: subjectController,
+              ),
+              margin: const EdgeInsets.all(10),
+            )),
+          ],
+        ),
+        Row(
+          children: [
+            Text("message",
+                style:
+                    Flutter95.textStyle.copyWith(fontWeight: FontWeight.bold)),
+            Expanded(
+                child: Container(
+              child: TextField95(
+                height: 100,
+                maxLines: 5,
+                multiline: true,
+                controller: messageController,
+              ),
+              margin: const EdgeInsets.all(10),
+            )),
+          ],
+        ),
+        Container(
+          margin: const EdgeInsets.all(15),
+          child: Button95(
+            onTap: () {
+              //TODO: Make this send an email to my account
+            },
+            child: Text(
+              'submit',
+              style: Flutter95.textStyle,
+            ),
+          ),
+        )
+      ]),
+    );
   }
 }
 
@@ -220,7 +353,6 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var deepBlue = Color.fromARGB(255, 7, 19, 205);
     return Scaffold95(
         title: 'Flutter95',
         toolbar: Toolbar95(actions: [
@@ -381,16 +513,6 @@ class MainScreen extends StatelessWidget {
       onMove: (data) {
         accepted = false;
       },
-    );
-  }
-}
-
-class ScreenThatCanPop extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold95(
-      title: 'Screen that can pop',
-      body: Container(),
     );
   }
 }
