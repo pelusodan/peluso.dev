@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter95/flutter95.dart';
+import 'dart:js' as js;
 
 void main() {
   runApp(Flutter95App());
@@ -27,10 +28,10 @@ class _Flutter95State extends State<Flutter95Stateful> {
   /**
    * This keeps track of the windows on our screen
    */
-  List<int> windowIds = [0, 1, 99];
+  List<int> windowIds = [0, 1, 99, 2];
 
   Offset aboutPosition = Offset(100, 100);
-  Offset contactMePosition = Offset(200, 200);
+  Offset projectPosition = Offset(200, 200);
   double prevScale = 1;
   double scale = 1;
 
@@ -50,8 +51,8 @@ class _Flutter95State extends State<Flutter95Stateful> {
         windowIds.add(1);
       });
 
-  void updateContactPosition(Offset newPosition) => setState(() {
-        contactMePosition = newPosition;
+  void updateProjectPosition(Offset newPosition) => setState(() {
+        projectPosition = newPosition;
         windowIds.remove(2);
         windowIds.add(2);
       });
@@ -138,17 +139,17 @@ class _Flutter95State extends State<Flutter95Stateful> {
     );
   }
 
-  Widget buildContactMe() {
+  Widget buildProject() {
     return Draggable(
       maxSimultaneousDrags: 1,
       data: 'contact_window',
       child: Transform.scale(
         scale: scale,
-        child: buildContactMeContent(),
+        child: buildProjectContent(),
       ),
-      feedback: buildContactMeContent(),
+      feedback: buildProjectContent(),
       childWhenDragging: Container(),
-      onDragEnd: (details) => updateContactPosition(details.offset),
+      onDragEnd: (details) => updateProjectPosition(details.offset),
     );
   }
 
@@ -236,9 +237,9 @@ class _Flutter95State extends State<Flutter95Stateful> {
       );
     } else if (e == 2) {
       return Positioned(
-        child: buildContactMe(),
-        left: contactMePosition.dx,
-        top: contactMePosition.dy - verticalOffset,
+        child: buildProject(),
+        left: projectPosition.dx,
+        top: projectPosition.dy - verticalOffset,
       );
     } else if (e == 99) {
       //This serves as the contact form which cannot move
@@ -334,6 +335,64 @@ class _Flutter95State extends State<Flutter95Stateful> {
         )
       ]),
     );
+  }
+
+  Widget buildProjectContent() {
+    return Elevation95(
+        type: Elevation95Type.down,
+        child: SingleChildScrollView(
+          child: Stack(
+            children: <Widget>[
+              Container(
+                width: 500,
+                height: 300,
+                child: Scaffold95(
+                  title: "WalletGuru",
+                  toolbar: Toolbar95(
+                    actions: [
+                      Item95(
+                        label: 'repo',
+                        onTap: (_) async {
+                          onRepoTapped();
+                        },
+                      )
+                    ],
+                  ),
+                  body: Row(
+                    children: [
+                      Image.asset(
+                        'img/wallet_guru.png',
+                        width: 190,
+                        height: 190,
+                      ),
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Text(
+                              'WalletGuru is a finance-based Reddit client designed to show users the most relevant information to their current account balance performance.',
+                              style: Flutter95.textStyle,
+                              textAlign: TextAlign.center,
+                            ),
+                            Image.asset(
+                              'img/feed.png',
+                              width: 80,
+                              height: 80,
+                            )
+                          ],
+                        )
+                      )
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        ));
+  }
+
+  void onRepoTapped() {
+    js.context.callMethod(
+        'open', ['https://github.com/pelusodan/WalletGuru']);
   }
 }
 
