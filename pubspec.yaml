@@ -30,3 +30,7 @@ flutter:
     - family: Blockstepped
       fonts:
         - asset: fonts/Blockstepped.ttf
+
+    - family: Comfortaa
+      fonts:
+        - asset: fonts/Comfortaa-Regular.ttf

@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'peluso.dev',
       theme: ThemeData(scaffoldBackgroundColor: Colors.lightBlue),
-      home: const MyHomePage(title: 'peluso.dev'),
+      home: const NewConceptScreen(),
     );
   }
 }
@@ -154,9 +154,7 @@ class NewConceptScreen extends StatefulWidget {
 }
 
 class _NewConceptScreenState extends State<NewConceptScreen> {
-
   int selectionIndex = 0;
-
 
   @override
   Widget build(BuildContext context) {
@@ -167,89 +165,33 @@ class _NewConceptScreenState extends State<NewConceptScreen> {
 
     return Material(
       type: MaterialType.transparency,
-      child: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-                fit: BoxFit.cover,
-                image: getImageFromSelection(selectionIndex)),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: screenHeight / 20,
-              ),
-              Text(
-                'peluso.dev',
-                style:
-                TextStyle(color: Colors.white, fontSize: screenHeight / 6),
-              ),
-              SizedBox(
-                width: screenWidth,
-                height: screenHeight / 3,
-                child: ListWheelScrollView(
-                    onSelectedItemChanged: (index){
-                      print("index is " + index.toString());
-                      setBackground(index);
-                    },
-                    physics: FixedExtentScrollPhysics(),
-                    itemExtent: 100,
-                    perspective: .01,
-                    children: [
-                      TextButton(
-                          onPressed: () {
-                          },
-                          child: Text(
-                            "front end developer",
-                            style: style,
-                          )),
-                      TextButton(
-                          onPressed: () {
-                          },
-                          child: Text(
-                            "hardware engineer",
-                            style: style,
-                          )),
-                      TextButton(
-                          onPressed: () {
-                          },
-                          child: Text(
-                            "adventurer",
-                            style: style,
-                          )),
-                      TextButton(
-                          onPressed: () {
-                          },
-                          child: Text(
-                            "indie rocker",
-                            style: style,
-                          )),
-                    ]),
-              )
-            ],
-          )),
+      child: buildTextBackground(),
     );
   }
 
   ExactAssetImage getImageFromSelection(int selectionIndex) {
-    var image =  const ExactAssetImage('img/camp_dark.jpg');
+    var image = const ExactAssetImage('img/camp_dark.jpg');
     switch (selectionIndex) {
-      case 0: {
-        image =  const ExactAssetImage('img/camp_dark.jpg');
-      }
-      break;
-      case 1: {
-        image =  const ExactAssetImage('img/water_arches.jpg');
-      }
-      break;
-      case 2: {
-        image =  const ExactAssetImage('img/narrows.jpg');
-      }
-      break;
-      case 3: {
-        image =  const ExactAssetImage('img/cv.jpg');
-      }
-      break;
+      case 0:
+        {
+          image = const ExactAssetImage('img/camp_dark.jpg');
+        }
+        break;
+      case 1:
+        {
+          image = const ExactAssetImage('img/water_arches.jpg');
+        }
+        break;
+      case 2:
+        {
+          image = const ExactAssetImage('img/narrows.jpg');
+        }
+        break;
+      case 3:
+        {
+          image = const ExactAssetImage('img/cv.jpg');
+        }
+        break;
     }
     return image;
   }
@@ -258,5 +200,89 @@ class _NewConceptScreenState extends State<NewConceptScreen> {
     setState(() {
       selectionIndex = index;
     });
+  }
+
+  Widget buildBackgroundSwitcher() {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+    var style = TextStyle(color: Colors.white, fontSize: screenHeight / 12);
+    return Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              fit: BoxFit.cover, image: getImageFromSelection(selectionIndex)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: screenHeight / 20,
+            ),
+            Text(
+              'peluso.dev',
+              style: TextStyle(color: Colors.white, fontSize: screenHeight / 6),
+            ),
+            SizedBox(
+              width: screenWidth,
+              height: screenHeight / 3,
+              child: ListWheelScrollView(
+                  onSelectedItemChanged: (index) {
+                    print("index is " + index.toString());
+                    setBackground(index);
+                  },
+                  physics: FixedExtentScrollPhysics(),
+                  itemExtent: 100,
+                  perspective: .01,
+                  children: [
+                    TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          "front end developer",
+                          style: style,
+                        )),
+                    TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          "hardware engineer",
+                          style: style,
+                        )),
+                    TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          "adventurer",
+                          style: style,
+                        )),
+                    TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          "indie rocker",
+                          style: style,
+                        )),
+                  ]),
+            )
+          ],
+        ));
+  }
+
+  Widget buildTextBackground() {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+    return Container(
+        decoration: BoxDecoration(
+      image: DecorationImage(
+          fit: BoxFit.cover, image: ExactAssetImage('img/narrows.jpg'),
+    )),
+    child: SizedBox.expand(
+      child: Align(
+        alignment: Alignment.center,
+        child: Text(
+          "peluso.dev",
+          style: TextStyle(
+              fontSize: screenWidth / 4,
+              color: Colors.white,
+              fontFamily: 'Comfortaa'
+          ),
+        ),
+      )
+    ),);
   }
 }
