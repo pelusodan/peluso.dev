@@ -121,7 +121,14 @@ class _Flutter95State extends State<Flutter95Stateful> {
           label: 'Exit',
         ),
       ],
-      onItemSelected: (item) {},
+      onItemSelected: (item) {
+        if(item==1) {
+          js.context.callMethod('open',
+              [
+                'https://pelusodan.com'
+              ]);
+        }
+      },
     );
   }
 
@@ -175,7 +182,33 @@ class _Flutter95State extends State<Flutter95Stateful> {
                               MenuItem95(value: 3, label: 'twitter')
                             ],
                             onItemSelected: (item) {
-                              //TODO
+                              switch (item) {
+                                case 1:
+                                  {
+                                    js.context.callMethod('open',
+                                        [
+                                          'https://github.com/pelusodan'
+                                        ]);
+                                  }
+                                  break;
+                                case 2:
+                                  {
+                                    js.context.callMethod('open',
+                                        [
+                                          'https://www.linkedin.com/in/pelusodan/'
+                                        ]);
+                                  }
+                                  break;
+                                case 3:
+                                  {
+                                    js.context.callMethod('open',
+                                        [
+                                          'https://twitter.com/DanPeluso2'
+                                        ]);
+                                  }
+                                  break;
+                              }
+
                             }),
                       )
                     ],
@@ -459,7 +492,14 @@ class MainScreen extends StatelessWidget {
           label: 'Exit',
         ),
       ],
-      onItemSelected: (item) {},
+      onItemSelected: (item) {
+        if(item==1) {
+          js.context.callMethod('open',
+              [
+                'https://pelusodan.com'
+              ]);
+        }
+      },
     );
   }
 
@@ -487,7 +527,7 @@ class MainScreen extends StatelessWidget {
                                 MenuItem95(value: 3, label: 'twitter')
                               ],
                               onItemSelected: (item) {
-                                //TODO
+
                               }),
                         )
                       ],
@@ -530,9 +570,8 @@ class MainScreen extends StatelessWidget {
                                 MenuItem95(value: 2, label: 'linkedin'),
                                 MenuItem95(value: 3, label: 'twitter')
                               ],
-                              onItemSelected: (item) {
-                                //TODO
-                              }),
+                              onItemSelected: (item) {}
+                              ),
                         )
                       ],
                     ),
