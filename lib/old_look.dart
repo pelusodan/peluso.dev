@@ -5,7 +5,7 @@ import 'package:flutter95/flutter95.dart';
 import 'dart:js' as js;
 
 void main() {
-  runApp(Flutter95App());
+  //runApp(Flutter95App());
 }
 
 class Flutter95Stateful extends StatefulWidget {
@@ -216,7 +216,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
                   body: Row(
                     children: [
                       Image.asset(
-                        'img/header_dan.png',
+                        'assets/img/header_dan.png',
                         width: 190,
                         height: 190,
                       ),
@@ -394,7 +394,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
                   body: Row(
                     children: [
                       Image.asset(
-                        'img/wallet_guru.png',
+                        'assets/img/wallet_guru.png',
                         width: 190,
                         height: 190,
                       ),
@@ -407,7 +407,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
                               textAlign: TextAlign.center,
                             ),
                             Image.asset(
-                              'img/feed.png',
+                              'assets/img/feed.png',
                               width: 80,
                               height: 80,
                             )
@@ -426,191 +426,5 @@ class _Flutter95State extends State<Flutter95Stateful> {
   void onRepoTapped() {
     js.context.callMethod(
         'open', ['https://github.com/pelusodan/WalletGuru']);
-  }
-}
-
-class Flutter95App extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      color: Flutter95.background,
-      home: MainScreen(),
-    );
-  }
-}
-
-class MainScreen extends StatelessWidget {
-  var accepted = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold95(
-        title: 'Flutter95',
-        toolbar: Toolbar95(actions: [
-          Item95(
-            label: 'File',
-            menu: _buildMenu(),
-          ),
-          Item95(
-            label: 'Edit',
-            onTap: (context) {},
-          ),
-          Item95(
-            label: 'Save',
-            onTap: (context) {},
-          ),
-        ]),
-        body: Container(
-          width: 800,
-          height: 800,
-          child: Stack(
-            children: [
-              Positioned.fill(
-                  child: Container(
-                color: Colors.blue,
-              )),
-              buildAbout(),
-            ],
-          ),
-        ));
-  }
-
-  Menu95 _buildMenu() {
-    return Menu95(
-      items: [
-        MenuItem95(
-          value: 1,
-          label: 'New',
-        ),
-        MenuItem95(
-          value: 2,
-          label: 'Open',
-        ),
-        MenuItem95(
-          value: 3,
-          label: 'Exit',
-        ),
-      ],
-      onItemSelected: (item) {
-        if(item==1) {
-          js.context.callMethod('open',
-              [
-                'https://pelusodan.com'
-              ]);
-        }
-      },
-    );
-  }
-
-  Widget buildAbout() {
-    return Draggable(
-      data: 'about_window',
-      child: Elevation95(
-          type: Elevation95Type.down,
-          child: SingleChildScrollView(
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  width: 500,
-                  height: 300,
-                  child: Scaffold95(
-                    title: "About",
-                    toolbar: Toolbar95(
-                      actions: [
-                        Item95(
-                          label: 'socials',
-                          menu: Menu95(
-                              items: [
-                                MenuItem95(value: 1, label: 'github'),
-                                MenuItem95(value: 2, label: 'linkedin'),
-                                MenuItem95(value: 3, label: 'twitter')
-                              ],
-                              onItemSelected: (item) {
-
-                              }),
-                        )
-                      ],
-                    ),
-                    body: Row(
-                      children: [
-                        Image.asset(
-                          'img/header_dan.png',
-                          width: 190,
-                          height: 190,
-                        ),
-                        Text(
-                          'mobile developer \nhardware engineer \nmusician',
-                          style: Flutter95.textStyle,
-                        )
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            ),
-          )),
-      feedback: Elevation95(
-          type: Elevation95Type.down,
-          child: SingleChildScrollView(
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  width: 500,
-                  height: 300,
-                  child: Scaffold95(
-                    title: "About",
-                    toolbar: Toolbar95(
-                      actions: [
-                        Item95(
-                          label: 'socials',
-                          menu: Menu95(
-                              items: [
-                                MenuItem95(value: 1, label: 'github'),
-                                MenuItem95(value: 2, label: 'linkedin'),
-                                MenuItem95(value: 3, label: 'twitter')
-                              ],
-                              onItemSelected: (item) {}
-                              ),
-                        )
-                      ],
-                    ),
-                    body: Row(
-                      children: [
-                        Image.asset(
-                          'img/header_dan.png',
-                          width: 190,
-                          height: 190,
-                        ),
-                        Text(
-                          'mobile developer \nhardware engineer \nmusician',
-                          style: Flutter95.textStyle,
-                        )
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            ),
-          )),
-      childWhenDragging: Container(),
-    );
-  }
-
-  Widget buildDragTarget() {
-    return DragTarget(
-      builder: (context, List<String?> candidateData, rejectedData) {
-        return accepted ? buildAbout() : Container();
-      },
-      onAccept: (data) {
-        accepted = false;
-      },
-      onWillAccept: (data) {
-        return true;
-      },
-      onMove: (data) {
-        accepted = false;
-      },
-    );
   }
 }

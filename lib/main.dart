@@ -86,8 +86,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             minHeight: screenWidth / 20,
                             minWidth: screenWidth / 20),
                         onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => Flutter95App()));
+                          /*Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => Flutter95App()));*/
                         },
                         icon: FaIcon(FontAwesomeIcons.linkedin,
                             color: vapeYellow, size: screenWidth / 20),
