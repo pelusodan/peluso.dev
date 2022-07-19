@@ -59904,7 +59904,7 @@ p=A.a9i(B.aT,r.Gm(),q,p)
 s=r.Gm()
 return A.acc(p,A.bP(q,q,q,q,q,q,q,q,q),"contact_window",s,1,new A.a24(r),t.N)},
 Gk(){var s=null,r=A.a([new A.hI("socials",new A.uI(A.a([new A.fS(1,"github"),new A.fS(2,"linkedin"),new A.fS(3,"twitter")],t.tE),new A.a2_()),s,s)],t.a5),q=t.p
-return new A.jS(A.YP(A.pG(B.b8,A.a([A.bP(s,new A.mi("About",A.ko(A.a([A.a8A("img/header_dan.png",190,190),A.h8("mobile developer \nhardware engineer \nmusician",s,s,s,B.aC,s,s)],q),B.az),new A.q1(r,s),s),s,s,s,300,s,s,500)],q),B.cg),s),B.dv,s)},
+return new A.jS(A.YP(A.pG(B.b8,A.a([A.bP(s,new A.mi("About",A.ko(A.a([A.a8A("assets/img/header_dan.png",190,190),A.h8("mobile developer \nhardware engineer \nmusician",s,s,s,B.aC,s,s)],q),B.az),new A.q1(r,s),s),s,s,s,300,s,s,500)],q),B.cg),s),B.dv,s)},
 a0h(){var s=null
 return A.og(s,new A.jS(A.YP(A.pG(B.b8,A.a([A.bP(s,new A.mi("Contact Me",this.a0i(),s,s),s,s,s,500,s,s,500)],t.p),B.cg),s),B.dv,s),B.al,!1,s,s,s,s,s,s,s,s,new A.a21(this),s,s,s)},
 K2(a,b){var s,r,q=this,p=null
@@ -59918,7 +59918,7 @@ else return A.bP(p,p,p,p,p,p,p,p,p)},
 a0i(){var s=this,r=null,q=t.p
 return A.bP(r,A.a8g(A.a([A.ko(A.a([A.h8("name",r,r,r,B.aC.qU(B.aJ),r,r),A.tE(A.bP(r,A.a_H(s.at,32,1,!1),r,r,r,r,B.du,r,r),1)],q),B.az),A.ko(A.a([A.h8("email",r,r,r,B.aC.qU(B.aJ),r,r),A.tE(A.bP(r,A.a_H(s.ax,32,1,!1),r,r,r,r,B.du,r,r),1)],q),B.az),A.ko(A.a([A.h8("subject",r,r,r,B.aC.qU(B.aJ),r,r),A.tE(A.bP(r,A.a_H(s.ch,32,1,!1),r,r,r,r,B.du,r,r),1)],q),B.az),A.ko(A.a([A.h8("message",r,r,r,B.aC.qU(B.aJ),r,r),A.tE(A.bP(r,A.a_H(s.ay,100,5,!0),r,r,r,r,B.du,r,r),1)],q),B.az),A.bP(r,new A.nx(new A.a22(),A.h8("submit",r,r,r,B.aC,r,r),B.yu,30,r),r,r,r,r,B.yt,r,r)],q),B.az),r,r,r,r,B.lu,r,r)},
 Gm(){var s=null,r=A.a([new A.hI("repo",s,new A.a23(this),s)],t.a5),q=t.p
-return new A.jS(A.YP(A.pG(B.b8,A.a([A.bP(s,new A.mi("WalletGuru",A.ko(A.a([A.a8A("img/wallet_guru.png",190,190),A.tE(A.a8g(A.a([A.h8("WalletGuru is a finance-based Reddit client designed to show users the most relevant information to their current account balance performance.",s,s,s,B.aC,B.k6,s),A.a8A("img/feed.png",80,80)],q),B.az),1)],q),B.az),new A.q1(r,s),s),s,s,s,300,s,s,500)],q),B.cg),s),B.dv,s)}}
+return new A.jS(A.YP(A.pG(B.b8,A.a([A.bP(s,new A.mi("WalletGuru",A.ko(A.a([A.a8A("assets/img/wallet_guru.png",190,190),A.tE(A.a8g(A.a([A.h8("WalletGuru is a finance-based Reddit client designed to show users the most relevant information to their current account balance performance.",s,s,s,B.aC,B.k6,s),A.a8A("assets/img/feed.png",80,80)],q),B.az),1)],q),B.az),new A.q1(r,s),s),s,s,s,300,s,s,500)],q),B.cg),s),B.dv,s)}}
 A.a2d.prototype={
 $0(){var s=this.a
 return s.w=s.r*this.b},

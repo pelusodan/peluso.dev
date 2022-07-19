@@ -4,10 +4,9 @@ const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
   "version.json": "1633bc80f3ba3e87235ea58b8de8dd9e",
-"index.html": "49616948bfcfc12cdb53568e85727d05",
-"/": "49616948bfcfc12cdb53568e85727d05",
-"main.dart.js": "047bce8dbe1a970bec932643986a8141",
-"flutter.js": "eb2682e33f25cd8f1fc59011497c35f8",
+"index.html": "6673943b8df345aa8332480a0e5c3a5c",
+"/": "6673943b8df345aa8332480a0e5c3a5c",
+"main.dart.js": "c4f3b9899a9037e5c6acbce18c7fde6c",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
 "icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
 "icons/Icon-maskable-192.png": "c457ef57daa1d16f64b27b786ec2ea3c",
@@ -27,11 +26,7 @@ const RESOURCES = {
 "assets/assets/img/feed.png": "706bbd52b1b3b6b9b9a73b35780ac5ac",
 "assets/assets/img/header_dan.png": "0596c3d9ae4af8f871d50004a29f1299",
 "assets/assets/img/old_school_profile.jpg": "8deda284f1742bfbd34cec7a63af3efa",
-"assets/assets/img/wallet_guru.png": "60e0e5ee8e965fddc9a4492c62c61a82",
-"canvaskit/canvaskit.js": "c2b4e5f3d7a3d82aed024e7249a78487",
-"canvaskit/profiling/canvaskit.js": "ae2949af4efc61d28a4a80fffa1db900",
-"canvaskit/profiling/canvaskit.wasm": "95e736ab31147d1b2c7b25f11d4c32cd",
-"canvaskit/canvaskit.wasm": "4b83d89d9fecbea8ca46f2f760c5a9ba"
+"assets/assets/img/wallet_guru.png": "60e0e5ee8e965fddc9a4492c62c61a82"
 };
 
 // The application shell files that are downloaded before a service worker can
