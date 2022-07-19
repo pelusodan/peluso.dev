@@ -30,6 +30,9 @@ flutter:
   uses-material-design: true
   assets:
     - assets/img/old_school_profile.jpg
+    - assets/img/header_dan.png
+    - assets/img/wallet_guru.png
+    - assets/img/feed.png
   fonts:
     - family: Blockstepped
       fonts:
