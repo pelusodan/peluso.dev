@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter95/flutter95.dart';
 import 'dart:js' as js;
@@ -28,10 +29,11 @@ class _Flutter95State extends State<Flutter95Stateful> {
   /**
    * This keeps track of the windows on our screen
    */
-  List<int> windowIds = [0, 1, 99, 2];
+  List<int> windowIds = [0, 1, 99, 2, 69];
 
   Offset aboutPosition = Offset(100, 100);
-  Offset projectPosition = Offset(200, 200);
+  Offset projectPosition = Offset(500, 200);
+  Offset musicPosition = Offset(100, 500);
   double prevScale = 1;
   double scale = 1;
 
@@ -40,6 +42,8 @@ class _Flutter95State extends State<Flutter95Stateful> {
   String? currentMessage;
 
   String? currentName;
+
+  var initialPage = 0;
 
   void updateScale(double zoom) => setState(() => scale = prevScale * zoom);
 
@@ -60,6 +64,12 @@ class _Flutter95State extends State<Flutter95Stateful> {
   void updateStaticContactPosition() => setState(() {
         windowIds.remove(99);
         windowIds.add(99);
+      });
+
+  void updateMusicPosition(Offset offset) => setState(() {
+        musicPosition = offset;
+        windowIds.remove(69);
+        windowIds.add(69);
       });
 
   var accepted = false;
@@ -122,11 +132,8 @@ class _Flutter95State extends State<Flutter95Stateful> {
         ),
       ],
       onItemSelected: (item) {
-        if(item==1) {
-          js.context.callMethod('open',
-              [
-                'https://pelusodan.com'
-              ]);
+        if (item == 1) {
+          js.context.callMethod('open', ['https://pelusodan.com']);
         }
       },
     );
@@ -160,6 +167,20 @@ class _Flutter95State extends State<Flutter95Stateful> {
     );
   }
 
+  Widget buildMusic() {
+    return Draggable(
+      maxSimultaneousDrags: 1,
+      data: 'music_window',
+      child: Transform.scale(
+        scale: scale,
+        child: buildMusicContent(),
+      ),
+      feedback: buildMusicContent(),
+      childWhenDragging: Container(),
+      onDragEnd: (details) => updateMusicPosition(details.offset),
+    );
+  }
+
   Widget buildAboutWindowContent() {
     return Elevation95(
         type: Elevation95Type.down,
@@ -186,29 +207,23 @@ class _Flutter95State extends State<Flutter95Stateful> {
                                 case 1:
                                   {
                                     js.context.callMethod('open',
-                                        [
-                                          'https://github.com/pelusodan'
-                                        ]);
+                                        ['https://github.com/pelusodan']);
                                   }
                                   break;
                                 case 2:
                                   {
-                                    js.context.callMethod('open',
-                                        [
-                                          'https://www.linkedin.com/in/pelusodan/'
-                                        ]);
+                                    js.context.callMethod('open', [
+                                      'https://www.linkedin.com/in/pelusodan/'
+                                    ]);
                                   }
                                   break;
                                 case 3:
                                   {
                                     js.context.callMethod('open',
-                                        [
-                                          'https://twitter.com/DanPeluso2'
-                                        ]);
+                                        ['https://twitter.com/DanPeluso2']);
                                   }
                                   break;
                               }
-
                             }),
                       )
                     ],
@@ -273,6 +288,12 @@ class _Flutter95State extends State<Flutter95Stateful> {
         child: buildProject(),
         left: projectPosition.dx,
         top: projectPosition.dy - verticalOffset,
+      );
+    } else if (e == 69) {
+      return Positioned(
+        child: buildMusic(),
+        left: musicPosition.dx,
+        top: musicPosition.dy - verticalOffset,
       );
     } else if (e == 99) {
       //This serves as the contact form which cannot move
@@ -399,21 +420,20 @@ class _Flutter95State extends State<Flutter95Stateful> {
                         height: 190,
                       ),
                       Expanded(
-                        child: Column(
-                          children: [
-                            Text(
-                              'WalletGuru is a finance-based Reddit client designed to show users the most relevant information to their current account balance performance.',
-                              style: Flutter95.textStyle,
-                              textAlign: TextAlign.center,
-                            ),
-                            Image.asset(
-                              'assets/img/feed.png',
-                              width: 80,
-                              height: 80,
-                            )
-                          ],
-                        )
-                      )
+                          child: Column(
+                        children: [
+                          Text(
+                            'WalletGuru is a finance-based Reddit client designed to show users the most relevant information to their current account balance performance.',
+                            style: Flutter95.textStyle,
+                            textAlign: TextAlign.center,
+                          ),
+                          Image.asset(
+                            'assets/img/feed.png',
+                            width: 80,
+                            height: 80,
+                          )
+                        ],
+                      ))
                     ],
                   ),
                 ),
@@ -424,7 +444,79 @@ class _Flutter95State extends State<Flutter95Stateful> {
   }
 
   void onRepoTapped() {
-    js.context.callMethod(
-        'open', ['https://github.com/pelusodan/WalletGuru']);
+    js.context.callMethod('open', ['https://github.com/pelusodan/WalletGuru']);
+  }
+
+  Widget buildMusicContent() {
+    final PageController controller = PageController(initialPage: initialPage);
+    return Elevation95(
+        type: Elevation95Type.down,
+        child: Stack(
+          children: <Widget>[
+            SizedBox(
+              width: 400,
+              height: 300,
+              child: Scaffold95(
+                  title: "Albums",
+                  toolbar: null,
+                  body: Expanded(
+                    child: PageView(
+                      onPageChanged: (page) {
+                        initialPage = page;
+                      },
+                      controller: controller,
+                      //scrollDirection: Axis.vertical,
+                      children: <Widget>[
+                        Center(
+                          child: buildAlbumContent(
+                              "Common Vice",
+                              'assets/img/cv.png',
+                              "Common Vice is a collaborative project between myself and my bandmate Adrian Duffey. I recorded drums, guitar, vocals, and bass on 10 tracks about the college experience."),
+                        ),
+                        Center(
+                          child: buildAlbumContent(
+                              "Austin",
+                              'assets/img/austin.png',
+                              "Austin is a solo project I worked on in the beginning of the pandemic. It was written in a weekend trip to the city with only 1 pair of jeans and a guitar on my back."),
+                        ),
+                        Center(
+                          child: buildAlbumContent(
+                              "Mature",
+                              'assets/img/mature.png',
+                              "Mature is my first recorded project, comprised of songs I wrote from 7th grade until my freshman year of college. Most tracks are acoustic only, and tell stories about my upbringing."),
+                        )
+                      ],
+                    ),
+                  )),
+            )
+          ],
+        ));
+  }
+
+  Widget buildAlbumContent(
+      String albumName, String albumCoverPath, String body) {
+    return Padding(
+      padding: EdgeInsets.all(5.0),
+      child: Column(
+        children: [
+          Text(
+            albumName,
+            style: Flutter95.headerTextStyle.copyWith(color: Colors.black),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Image.asset(
+              albumCoverPath,
+              width: 150,
+              height: 150,
+            ),
+          ),
+          Text(
+            body,
+            style: Flutter95.textStyle,
+          )
+        ],
+      ),
+    );
   }
 }

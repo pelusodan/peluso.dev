@@ -33,6 +33,9 @@ flutter:
     - assets/img/header_dan.png
     - assets/img/wallet_guru.png
     - assets/img/feed.png
+    - assets/img/cv.png
+    - assets/img/austin.png
+    - assets/img/mature.png
   fonts:
     - family: Blockstepped
       fonts:
