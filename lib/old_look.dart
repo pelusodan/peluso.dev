@@ -5,6 +5,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter95/flutter95.dart';
 import 'dart:js' as js;
 
+import 'album.dart';
+
 void main() {
   //runApp(Flutter95App());
 }
@@ -447,6 +449,10 @@ class _Flutter95State extends State<Flutter95Stateful> {
     js.context.callMethod('open', ['https://github.com/pelusodan/WalletGuru']);
   }
 
+  void onAlbumTapped(Album album) {
+    js.context.callMethod('open', [album.url]);
+  }
+
   Widget buildMusicContent() {
     final PageController controller = PageController(initialPage: initialPage);
     return Elevation95(
@@ -468,22 +474,24 @@ class _Flutter95State extends State<Flutter95Stateful> {
                       //scrollDirection: Axis.vertical,
                       children: <Widget>[
                         Center(
-                          child: buildAlbumContent(
-                              "Common Vice",
-                              'assets/img/cv.png',
-                              "Common Vice is a collaborative project between myself and my bandmate Adrian Duffey. I recorded drums, guitar, vocals, and bass on 10 tracks about the college experience."),
-                        ),
+                            child: buildAlbumContent(
+                                "Common Vice",
+                                'assets/img/cv.png',
+                                "Common Vice is a collaborative project between myself and my bandmate Adrian Duffey. I recorded drums, guitar, vocals, and bass on 10 tracks about the college experience.",
+                                Album.commonVice)),
                         Center(
                           child: buildAlbumContent(
                               "Austin",
                               'assets/img/austin.png',
-                              "Austin is a solo project I worked on in the beginning of the pandemic. It was written in a weekend trip to the city with only 1 pair of jeans and a guitar on my back."),
+                              "Austin is a solo project I worked on in the beginning of the pandemic. It was written in a weekend trip to the city with only 1 pair of jeans and a guitar on my back.",
+                              Album.austin),
                         ),
                         Center(
                           child: buildAlbumContent(
                               "Mature",
                               'assets/img/mature.png',
-                              "Mature is my first recorded project, comprised of songs I wrote from 7th grade until my freshman year of college. Most tracks are acoustic only, and tell stories about my upbringing."),
+                              "Mature is my first recorded project, comprised of songs I wrote from 7th grade until my freshman year of college. Most tracks are acoustic only, and tell stories about my upbringing.",
+                              Album.mature),
                         )
                       ],
                     ),
@@ -494,29 +502,33 @@ class _Flutter95State extends State<Flutter95Stateful> {
   }
 
   Widget buildAlbumContent(
-      String albumName, String albumCoverPath, String body) {
+      String albumName, String albumCoverPath, String body, Album album) {
     return Padding(
-      padding: EdgeInsets.all(5.0),
-      child: Column(
-        children: [
-          Text(
-            albumName,
-            style: Flutter95.headerTextStyle.copyWith(color: Colors.black),
+        padding: EdgeInsets.all(5.0),
+        child: GestureDetector(
+          onTap: () {
+            onAlbumTapped(album);
+          },
+          child: Column(
+            children: [
+              Text(
+                albumName,
+                style: Flutter95.headerTextStyle.copyWith(color: Colors.black),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Image.asset(
+                  albumCoverPath,
+                  width: 150,
+                  height: 150,
+                ),
+              ),
+              Text(
+                body,
+                style: Flutter95.textStyle,
+              )
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Image.asset(
-              albumCoverPath,
-              width: 150,
-              height: 150,
-            ),
-          ),
-          Text(
-            body,
-            style: Flutter95.textStyle,
-          )
-        ],
-      ),
-    );
+        ));
   }
 }
