@@ -1,8 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter95/flutter95.dart';
+import 'package:pelusodan_dev/project.dart';
+import 'package:timelines/timelines.dart';
 import 'dart:js' as js;
 
 import 'album.dart';
@@ -31,25 +35,36 @@ class _Flutter95State extends State<Flutter95Stateful> {
   /**
    * This keeps track of the windows on our screen
    */
-  List<int> windowIds = [0, 1, 99, 2, 69];
+  List<int> windowIds = [0, 69, 1, 99, 2, 70];
 
   Offset aboutPosition = Offset(100, 100);
   Offset projectPosition = Offset(500, 200);
-  Offset musicPosition = Offset(100, 500);
+  Offset musicPosition = Offset(-150, 800);
   double prevScale = 1;
   double scale = 1;
 
+  //TODO make some sizes and boolean globals for mobile config on windowws
+  // no contact window on mobile
+  // TODO make the window class more generic so we can better add them
+  // TODO get email actually working
   String? currentEmail;
 
   String? currentMessage;
 
   String? currentName;
 
-  var initialPage = 0;
+  var musicCurrentPage = 0;
+  var projectCurrentPage = 0;
 
   void updateScale(double zoom) => setState(() => scale = prevScale * zoom);
 
   void commitScale() => setState(() => prevScale = scale);
+
+  void setAlbumSlidePage(int selection) =>
+      setState(() => musicCurrentPage = selection);
+
+  void setProjectSlidePage(int selection) =>
+      setState(() => projectCurrentPage = selection);
 
   void updateAboutPosition(Offset newPosition) => setState(() {
         aboutPosition = newPosition;
@@ -57,10 +72,15 @@ class _Flutter95State extends State<Flutter95Stateful> {
         windowIds.add(1);
       });
 
-  void updateProjectPosition(Offset newPosition) => setState(() {
-        projectPosition = newPosition;
+  void updateTimelinePosition() => setState(() {
         windowIds.remove(2);
         windowIds.add(2);
+      });
+
+  void updateProjectPosition(Offset newPosition) => setState(() {
+        projectPosition = newPosition;
+        windowIds.remove(70);
+        windowIds.add(70);
       });
 
   void updateStaticContactPosition() => setState(() {
@@ -155,10 +175,19 @@ class _Flutter95State extends State<Flutter95Stateful> {
     );
   }
 
+  Widget buildTimeline() {
+    return GestureDetector(
+      child: buildTimelineContent(),
+      onTap: () {
+        updateTimelinePosition();
+      },
+    );
+  }
+
   Widget buildProject() {
     return Draggable(
       maxSimultaneousDrags: 1,
-      data: 'contact_window',
+      data: 'project_window',
       child: Transform.scale(
         scale: scale,
         child: buildProjectContent(),
@@ -233,7 +262,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
                   body: Row(
                     children: [
                       Image.asset(
-                        'assets/img/header_dan.png',
+                        'assets/img/old_school_profile.jpg',
                         width: 190,
                         height: 190,
                       ),
@@ -287,15 +316,21 @@ class _Flutter95State extends State<Flutter95Stateful> {
       );
     } else if (e == 2) {
       return Positioned(
-        child: buildProject(),
-        left: projectPosition.dx,
-        top: projectPosition.dy - verticalOffset,
+        child: buildTimeline(),
+        left: 20,
+        bottom: 20,
       );
     } else if (e == 69) {
       return Positioned(
         child: buildMusic(),
         left: musicPosition.dx,
         top: musicPosition.dy - verticalOffset,
+      );
+    } else if (e == 70) {
+      return Positioned(
+        child: buildProject(),
+        left: projectPosition.dx,
+        top: projectPosition.dy - verticalOffset,
       );
     } else if (e == 99) {
       //This serves as the contact form which cannot move
@@ -393,52 +428,50 @@ class _Flutter95State extends State<Flutter95Stateful> {
     );
   }
 
-  Widget buildProjectContent() {
+  Widget buildTimelineContent() {
     return Elevation95(
         type: Elevation95Type.down,
         child: SingleChildScrollView(
           child: Stack(
             children: <Widget>[
               Container(
-                width: 500,
-                height: 300,
+                width: 1300,
+                height: 400,
                 child: Scaffold95(
-                  title: "WalletGuru",
-                  toolbar: Toolbar95(
-                    actions: [
-                      Item95(
-                        label: 'repo',
-                        onTap: (_) async {
-                          onRepoTapped();
-                        },
-                      )
-                    ],
-                  ),
-                  body: Row(
-                    children: [
-                      Image.asset(
-                        'assets/img/wallet_guru.png',
-                        width: 190,
-                        height: 190,
-                      ),
-                      Expanded(
-                          child: Column(
-                        children: [
-                          Text(
-                            'WalletGuru is a finance-based Reddit client designed to show users the most relevant information to their current account balance performance.',
-                            style: Flutter95.textStyle,
-                            textAlign: TextAlign.center,
+                    title: "Career",
+                    body: Expanded(
+                        child: Row(
+                      children: [
+                        FixedTimeline.tileBuilder(
+                          builder: TimelineTileBuilder.connectedFromStyle(
+                            contentsAlign: ContentsAlign.alternating,
+                            oppositeContentsBuilder: (context, index) =>
+                                Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Text(
+                                getTimelineTextFromIndex(index),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                            contentsBuilder: (context, index) => Image.asset(
+                              getImagePathFromTimelineIndex(index),
+                              height: 150,
+                              width: 150,
+                            ),
+                            connectorStyleBuilder: (context, index) =>
+                                ConnectorStyle.solidLine,
+                            indicatorStyleBuilder: (context, index) =>
+                                IndicatorStyle.dot,
+                            itemCount: 5,
                           ),
-                          Image.asset(
-                            'assets/img/feed.png',
-                            width: 80,
-                            height: 80,
-                          )
-                        ],
-                      ))
-                    ],
-                  ),
-                ),
+                          theme: TimelineThemeData(
+                            color: Flutter95.headerDark,
+                            direction: Axis.horizontal,
+                          ),
+                        )
+                      ],
+                      mainAxisAlignment: MainAxisAlignment.center,
+                    ))),
               )
             ],
           ),
@@ -454,7 +487,8 @@ class _Flutter95State extends State<Flutter95Stateful> {
   }
 
   Widget buildMusicContent() {
-    final PageController controller = PageController(initialPage: initialPage);
+    final PageController musicPageController =
+        PageController(initialPage: musicCurrentPage);
     return Elevation95(
         type: Elevation95Type.down,
         child: Stack(
@@ -468,9 +502,9 @@ class _Flutter95State extends State<Flutter95Stateful> {
                   body: Expanded(
                     child: PageView(
                       onPageChanged: (page) {
-                        initialPage = page;
+                        setAlbumSlidePage(page);
                       },
-                      controller: controller,
+                      controller: musicPageController,
                       //scrollDirection: Axis.vertical,
                       children: <Widget>[
                         Center(
@@ -493,6 +527,43 @@ class _Flutter95State extends State<Flutter95Stateful> {
                               "Mature is my first recorded project, comprised of songs I wrote from 7th grade until my freshman year of college. Most tracks are acoustic only, and tell stories about my upbringing.",
                               Album.mature),
                         )
+                      ],
+                    ),
+                  )),
+            )
+          ],
+        ));
+  }
+
+  Widget buildProjectContent() {
+    final PageController projectSlideController =
+        PageController(initialPage: projectCurrentPage);
+    return Elevation95(
+        type: Elevation95Type.down,
+        child: Stack(
+          children: <Widget>[
+            SizedBox(
+              width: 400,
+              height: 300,
+              child: Scaffold95(
+                  title: "Projects",
+                  toolbar: null,
+                  body: Expanded(
+                    child: PageView(
+                      onPageChanged: (page) {
+                        setProjectSlidePage(page);
+                      },
+                      controller: projectSlideController,
+                      children: <Widget>[
+                        Center(child: buildProjectPage(Project.walletGuru)),
+                        Center(child: buildProjectPage(Project.fridgePal)),
+                        Center(
+                            child:
+                                buildProjectPage(Project.kanestheticLearning)),
+                        Center(child: buildProjectPage(Project.missMyTrain)),
+                        Center(
+                            child: buildProjectPage(Project.pokemonDatabase)),
+                        Center(child: buildProjectPage(Project.personalSite)),
                       ],
                     ),
                   )),
@@ -530,5 +601,76 @@ class _Flutter95State extends State<Flutter95Stateful> {
             ],
           ),
         ));
+  }
+
+  String getImagePathFromTimelineIndex(int index) {
+    //return "assets/img/austin.png";
+    switch (index) {
+      case 0:
+        return "assets/img/neu.png";
+      case 1:
+        return "assets/img/pison.png";
+      case 2:
+        return "assets/img/whoop.png";
+      case 3:
+        return "assets/img/pison.png";
+      case 4:
+        return "assets/img/whoop.png";
+      default:
+        return "assets/img/austin.png";
+    }
+  }
+
+  String getTimelineTextFromIndex(int index) {
+    switch (index) {
+      case 0:
+        return "2017-2021\nB.S. in Computer Engineering with a \nMinor in Computer Science";
+      case 1:
+        return "2019\n- Developed data collection \napp and pipeline on Android \n- Refactored unity app to \nAndroid for ALS patients";
+      case 2:
+        return "2020\n- Worked on social media portion \nof Android app with over \n100k users impacted";
+      case 3:
+        return "2021\n- Built new consumer facing \ndevice interface using \nCompose and KMP";
+      case 4:
+        return "2021-2022\n- \"Smart Alarm\" sleep planning system\n- Maintained testing pipeline \n and improved internal architecture\n- Used clean architecture with Compose \nand Coroutines for the sleep details screen";
+      default:
+        return "ah fuck";
+    }
+  }
+
+  Widget buildProjectPage(Project project) {
+    return Padding(
+        padding: EdgeInsets.all(5.0),
+        child: GestureDetector(
+          onTap: () {
+            onUrlTapped(project.repoLink);
+          },
+          child: Column(
+            children: [
+              Text(
+                project.title,
+                textAlign: TextAlign.center,
+                style: Flutter95.headerTextStyle.copyWith(color: Colors.black),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Image.asset(
+                  project.imgPath,
+                  width: 150,
+                  height: 150,
+                ),
+              ),
+              Text(
+                project.body,
+                textAlign: TextAlign.center,
+                style: Flutter95.textStyle,
+              )
+            ],
+          ),
+        ));
+  }
+
+  void onUrlTapped(String repoLink) {
+    js.context.callMethod('open', [repoLink]);
   }
 }
