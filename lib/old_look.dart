@@ -141,17 +141,11 @@ class _Flutter95State extends State<Flutter95Stateful> {
       child: Scaffold95(
           title: 'peluso.dev',
           toolbar: mainToolbar(),
-          body: Container(
-              width: screenWidth,
-              height: screenHeight - verticalOffset,
-              child: GestureDetector(
-                onScaleUpdate: (details) => updateScale(details.scale),
-                onScaleEnd: (_) => commitScale(),
-                child: Stack(
-                    children: windowIds
-                        .map((e) => generateWidgetFromId(e, context))
-                        .toList()),
-              ))),
+          body: screenWidth <
+                  450 // check if we should render mobile version of site
+              ? buildMobilePage(screenWidth, screenHeight) // mobile version
+              : buildDesktopPage(screenWidth, screenHeight) // desktop version
+          ),
     );
   }
 
@@ -209,7 +203,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
 
   Widget buildTimeline() {
     return GestureDetector(
-      child: buildTimelineContent(),
+      child: buildTimelineContent(isVertical: false),
       onTap: () {
         updateTimelinePosition();
       },
@@ -244,15 +238,15 @@ class _Flutter95State extends State<Flutter95Stateful> {
     );
   }
 
-  Widget buildAboutWindowContent() {
+  Widget buildAboutWindowContent({double width = 500, double height = 300}) {
     return Elevation95(
         type: Elevation95Type.down,
         child: SingleChildScrollView(
           child: Stack(
             children: <Widget>[
               Container(
-                width: 500,
-                height: 300,
+                width: width,
+                height: height,
                 child: Scaffold95(
                   title: "About",
                   toolbar: Toolbar95(
@@ -311,15 +305,15 @@ class _Flutter95State extends State<Flutter95Stateful> {
         ));
   }
 
-  Widget buildTechContent() {
+  Widget buildTechContent({double width = 300, double height = 350}) {
     return Elevation95(
         type: Elevation95Type.down,
         child: SingleChildScrollView(
           child: Stack(
             children: <Widget>[
               Container(
-                width: 300,
-                height: 350,
+                width: width,
+                height: height,
                 child: Scaffold95(
                     title: "Toolbox",
                     body: Padding(
@@ -363,7 +357,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
         ));
   }
 
-  Widget buildContactMeContent() {
+  Widget buildContactMeContent({double width = 500, double height = 500}) {
     return GestureDetector(
       child: Elevation95(
           type: Elevation95Type.down,
@@ -371,8 +365,8 @@ class _Flutter95State extends State<Flutter95Stateful> {
             child: Stack(
               children: <Widget>[
                 Container(
-                    width: 500,
-                    height: 500,
+                    width: width,
+                    height: height,
                     child: Scaffold95(
                       title: "Contact Me",
                       body: buildContactMeForm(),
@@ -518,15 +512,16 @@ class _Flutter95State extends State<Flutter95Stateful> {
     );
   }
 
-  Widget buildTimelineContent() {
+  Widget buildTimelineContent(
+      {required bool isVertical, double width = 1300, double height = 400}) {
     return Elevation95(
         type: Elevation95Type.down,
         child: SingleChildScrollView(
           child: Stack(
             children: <Widget>[
               Container(
-                width: 1300,
-                height: 400,
+                width: width,
+                height: height,
                 child: Scaffold95(
                     title: "Career",
                     body: Expanded(
@@ -556,7 +551,8 @@ class _Flutter95State extends State<Flutter95Stateful> {
                           ),
                           theme: TimelineThemeData(
                             color: Flutter95.headerDark,
-                            direction: Axis.horizontal,
+                            direction:
+                                isVertical ? Axis.vertical : Axis.horizontal,
                           ),
                         )
                       ],
@@ -568,6 +564,47 @@ class _Flutter95State extends State<Flutter95Stateful> {
         ));
   }
 
+  Widget buildTimelineContentMobile(
+      {required bool isVertical, double width = 1300, double height = 400}) {
+    return Elevation95(
+        type: Elevation95Type.down,
+        child: Scaffold95(
+            title: "Career",
+            body: SingleChildScrollView(
+                child: SizedBox(
+              width: width,
+              height: height,
+              child: FixedTimeline.tileBuilder(
+                builder: TimelineTileBuilder.connectedFromStyle(
+                  contentsAlign: ContentsAlign.alternating,
+                  oppositeContentsBuilder: (context, index) => Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Text(
+                      getTimelineTextFromIndex(index),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  contentsBuilder: (context, index) => Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Image.asset(
+                      getImagePathFromTimelineIndex(index),
+                      height: 150,
+                      width: 150,
+                    ),
+                  ),
+                  connectorStyleBuilder: (context, index) =>
+                      ConnectorStyle.solidLine,
+                  indicatorStyleBuilder: (context, index) => IndicatorStyle.dot,
+                  itemCount: 5,
+                ),
+                theme: TimelineThemeData(
+                  color: Flutter95.headerDark,
+                  direction: isVertical ? Axis.vertical : Axis.horizontal,
+                ),
+              ),
+            ))));
+  }
+
   void onRepoTapped() {
     js.context.callMethod('open', ['https://github.com/pelusodan/WalletGuru']);
   }
@@ -576,7 +613,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
     js.context.callMethod('open', [album.url]);
   }
 
-  Widget buildMusicContent() {
+  Widget buildMusicContent({double width = 400, double height = 300}) {
     final PageController musicPageController =
         PageController(initialPage: musicCurrentPage);
     return Elevation95(
@@ -584,8 +621,8 @@ class _Flutter95State extends State<Flutter95Stateful> {
         child: Stack(
           children: <Widget>[
             SizedBox(
-              width: 400,
-              height: 300,
+              width: width,
+              height: height,
               child: Scaffold95(
                   title: "Albums",
                   toolbar: null,
@@ -625,7 +662,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
         ));
   }
 
-  Widget buildProjectContent() {
+  Widget buildProjectContent({double width = 400, double height = 300}) {
     final PageController projectSlideController =
         PageController(initialPage: projectCurrentPage);
     return Elevation95(
@@ -633,8 +670,8 @@ class _Flutter95State extends State<Flutter95Stateful> {
         child: Stack(
           children: <Widget>[
             SizedBox(
-              width: 400,
-              height: 300,
+              width: width,
+              height: height,
               child: Scaffold95(
                   title: "Projects",
                   toolbar: null,
@@ -766,5 +803,60 @@ class _Flutter95State extends State<Flutter95Stateful> {
 
   void onUrlTapped(String repoLink) {
     js.context.callMethod('open', [repoLink]);
+  }
+
+  Widget buildDesktopPage(double screenWidth, double screenHeight) {
+    return Container(
+        width: screenWidth,
+        height: screenHeight - verticalOffset,
+        child: GestureDetector(
+          onScaleUpdate: (details) => updateScale(details.scale),
+          onScaleEnd: (_) => commitScale(),
+          child: Stack(
+              children: windowIds
+                  .map((e) => generateWidgetFromId(e, context))
+                  .toList()),
+        ));
+  }
+
+  Widget buildMobilePage(double screenWidth, double screenHeight) {
+    return Container(
+      color: Colors.blue,
+      width: screenWidth,
+      height: screenHeight - 80,
+      child: Stack(
+        children: [
+          Positioned.fill(
+              child: Container(
+            color: Colors.blue,
+          )),
+          SizedBox(
+            width: screenWidth,
+            height: screenHeight,
+            child: ListView(
+              padding: EdgeInsets.all(10),
+              children: [
+                buildAboutWindowContent(
+                  width: screenWidth,
+                ),
+                const SizedBox(height: 20),
+                buildProjectContent(
+                  width: screenWidth,
+                ),
+                const SizedBox(height: 20),
+                buildTechContent(width: screenWidth),
+                const SizedBox(height: 20),
+                buildTimelineContentMobile(
+                    isVertical: true, width: screenWidth, height: 1000),
+                const SizedBox(height: 20),
+                buildContactMeContent(width: screenWidth),
+                const SizedBox(height: 20),
+                buildMusicContent(width: screenWidth, height: 350),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
