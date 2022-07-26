@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter95/flutter95.dart';
 import 'package:pelusodan_dev/project.dart';
+import 'package:pelusodan_dev/resume.dart';
 import 'package:timelines/timelines.dart';
 import 'dart:js' as js;
 
@@ -111,6 +112,15 @@ class _Flutter95State extends State<Flutter95Stateful> {
         label: 'Save',
         onTap: (context) {},
       ),
+      Item95(
+        label: 'Resume',
+        onTap: (context) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const Resume()),
+          );
+        },
+      ),
     ]);
   }
 
@@ -142,7 +152,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
       items: [
         MenuItem95(
           value: 1,
-          label: 'New',
+          label: 'Old Website',
         ),
         MenuItem95(
           value: 2,
@@ -156,7 +166,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
       onItemSelected: (item) {
         if (item == 1) {
           js.context.callMethod('open', ['https://pelusodan.com']);
-        }
+        } else if (item == 2) {}
       },
     );
   }

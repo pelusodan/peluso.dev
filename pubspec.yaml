@@ -20,6 +20,7 @@ dependencies:
   flutter_form_builder: ^6.0.1
   timelines: ^0.1.0
   url_launcher: ^6.1.5
+  pdfx: ^2.2.0
 
 dev_dependencies:
   flutter_test:
@@ -46,6 +47,7 @@ flutter:
     - assets/img/missMyTrain.png
     - assets/img/pokemon.png
     - assets/img/walletGuru.png
+    - assets/resume.pdf
   fonts:
     - family: Blockstepped
       fonts:
