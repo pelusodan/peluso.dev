@@ -7,6 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter95/flutter95.dart';
 import 'package:pelusodan_dev/project.dart';
 import 'package:pelusodan_dev/resume.dart';
+import 'package:pelusodan_dev/tech.dart';
 import 'package:timelines/timelines.dart';
 import 'dart:js' as js;
 
@@ -36,11 +37,12 @@ class _Flutter95State extends State<Flutter95Stateful> {
   /**
    * This keeps track of the windows on our screen
    */
-  List<int> windowIds = [0, 69, 1, 99, 2, 70];
+  List<int> windowIds = [0, 69, 1, 99, 2, 70, 30];
 
   Offset aboutPosition = Offset(100, 100);
   Offset projectPosition = Offset(500, 200);
   Offset musicPosition = Offset(-150, 800);
+  Offset techPosition = Offset(999, 100);
   double prevScale = 1;
   double scale = 1;
 
@@ -93,6 +95,12 @@ class _Flutter95State extends State<Flutter95Stateful> {
         musicPosition = offset;
         windowIds.remove(69);
         windowIds.add(69);
+      });
+
+  updateTechPosition(Offset offset) => setState(() {
+        techPosition = offset;
+        windowIds.remove(30);
+        windowIds.add(30);
       });
 
   var accepted = false;
@@ -182,6 +190,20 @@ class _Flutter95State extends State<Flutter95Stateful> {
       feedback: buildAboutWindowContent(),
       childWhenDragging: Container(),
       onDragEnd: (details) => updateAboutPosition(details.offset),
+    );
+  }
+
+  Widget buildTech() {
+    return Draggable(
+      maxSimultaneousDrags: 1,
+      data: 'tech_window',
+      child: Transform.scale(
+        scale: scale,
+        child: buildTechContent(),
+      ),
+      feedback: buildTechContent(),
+      childWhenDragging: Container(),
+      onDragEnd: (details) => updateTechPosition(details.offset),
     );
   }
 
@@ -289,6 +311,58 @@ class _Flutter95State extends State<Flutter95Stateful> {
         ));
   }
 
+  Widget buildTechContent() {
+    return Elevation95(
+        type: Elevation95Type.down,
+        child: SingleChildScrollView(
+          child: Stack(
+            children: <Widget>[
+              Container(
+                width: 300,
+                height: 350,
+                child: Scaffold95(
+                    title: "Toolbox",
+                    body: Padding(
+                      padding: EdgeInsets.all(2),
+                      child: ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (BuildContext context, int index) {
+                          TextStyle style = index == 0
+                              ? Flutter95.headerTextStyle.copyWith(
+                                  color: Flutter95.headerDark, fontSize: 22)
+                              : Flutter95.textStyle.copyWith(fontSize: 14);
+                          return Container(
+                              color: (index % 2 == 0)
+                                  ? Flutter95.grays[1]
+                                  : Flutter95.grays[0],
+                              child: Padding(
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                        child: Text(
+                                      techMap.keys.elementAt(index),
+                                      style: style,
+                                    )),
+                                    Text(
+                                      techMap.values.elementAt(index),
+                                      style: style,
+                                    ),
+                                  ],
+                                ),
+                                padding: EdgeInsets.all(3),
+                              ));
+                        },
+                        itemCount: techMap.length,
+                      ),
+                    )),
+              )
+            ],
+          ),
+        ));
+  }
+
   Widget buildContactMeContent() {
     return GestureDetector(
       child: Elevation95(
@@ -335,6 +409,12 @@ class _Flutter95State extends State<Flutter95Stateful> {
         child: buildMusic(),
         left: musicPosition.dx,
         top: musicPosition.dy - verticalOffset,
+      );
+    } else if (e == 30) {
+      return Positioned(
+        child: buildTech(),
+        left: techPosition.dx,
+        top: techPosition.dy - verticalOffset,
       );
     } else if (e == 70) {
       return Positioned(
@@ -559,22 +639,26 @@ class _Flutter95State extends State<Flutter95Stateful> {
                   title: "Projects",
                   toolbar: null,
                   body: Expanded(
-                    child: PageView(
-                      onPageChanged: (page) {
-                        setProjectSlidePage(page);
-                      },
+                    child: Scrollbar(
+                      child: PageView(
+                        onPageChanged: (page) {
+                          setProjectSlidePage(page);
+                        },
+                        controller: projectSlideController,
+                        children: <Widget>[
+                          Center(child: buildProjectPage(Project.walletGuru)),
+                          Center(child: buildProjectPage(Project.fridgePal)),
+                          Center(
+                              child: buildProjectPage(
+                                  Project.kanestheticLearning)),
+                          Center(child: buildProjectPage(Project.missMyTrain)),
+                          Center(
+                              child: buildProjectPage(Project.pokemonDatabase)),
+                          Center(child: buildProjectPage(Project.personalSite)),
+                        ],
+                      ),
+                      thumbVisibility: true,
                       controller: projectSlideController,
-                      children: <Widget>[
-                        Center(child: buildProjectPage(Project.walletGuru)),
-                        Center(child: buildProjectPage(Project.fridgePal)),
-                        Center(
-                            child:
-                                buildProjectPage(Project.kanestheticLearning)),
-                        Center(child: buildProjectPage(Project.missMyTrain)),
-                        Center(
-                            child: buildProjectPage(Project.pokemonDatabase)),
-                        Center(child: buildProjectPage(Project.personalSite)),
-                      ],
                     ),
                   )),
             )
