@@ -7,7 +7,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.17.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -15,6 +15,12 @@ dependencies:
   cupertino_icons: ^1.0.2
   animated_text_kit: ^4.2.1
   font_awesome_flutter: ^9.1.0
+  animated_background: ^2.0.0
+  flutter95: ^1.0.0
+  flutter_form_builder: ^6.0.1
+  timelines: ^0.1.0
+  url_launcher: ^6.1.5
+  pdfx: ^2.2.0
 
 dev_dependencies:
   flutter_test:
@@ -25,6 +31,23 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
+  assets:
+    - assets/img/old_school_profile.jpg
+    - assets/img/header_dan.png
+    - assets/img/wallet_guru.png
+    - assets/img/feed.png
+    - assets/img/cv.png
+    - assets/img/austin.png
+    - assets/img/mature.png
+    - assets/img/neu.png
+    - assets/img/pison.png
+    - assets/img/whoop.png
+    - assets/img/fridgePal.png
+    - assets/img/kanestheticLearning.png
+    - assets/img/missMyTrain.png
+    - assets/img/pokemon.png
+    - assets/img/walletGuru.png
+    - assets/resume.pdf
   fonts:
     - family: Blockstepped
       fonts:
