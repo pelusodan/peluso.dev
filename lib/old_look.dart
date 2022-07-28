@@ -308,7 +308,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
         ));
   }
 
-  Widget buildTechContent({double width = 300, double height = 350}) {
+  Widget buildTechContent({double width = 300, double height = 375}) {
     return Elevation95(
         type: Elevation95Type.down,
         child: SingleChildScrollView(
