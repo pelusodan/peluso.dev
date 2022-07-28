@@ -579,6 +579,9 @@ class _Flutter95State extends State<Flutter95Stateful> {
                                     style: Flutter95.headerTextStyle
                                         .copyWith(color: Flutter95.headerDark),
                                   ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
                                   Text(
                                     getTimelineTextFromIndex(index),
                                     textAlign: TextAlign.center,
@@ -635,6 +638,9 @@ class _Flutter95State extends State<Flutter95Stateful> {
                             textAlign: TextAlign.center,
                             style: Flutter95.headerTextStyle
                                 .copyWith(color: Flutter95.headerDark),
+                          ),
+                          const SizedBox(
+                            height: 20,
                           ),
                           Text(
                             getTimelineTextFromIndex(index),
@@ -922,7 +928,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
                 buildTechContent(width: screenWidth),
                 const SizedBox(height: 20),
                 buildTimelineContentMobile(
-                    isVertical: true, width: screenWidth, height: 1000),
+                    isVertical: true, width: screenWidth, height: 1100),
                 const SizedBox(height: 20),
                 buildContactMeContent(width: screenWidth),
                 const SizedBox(height: 20),

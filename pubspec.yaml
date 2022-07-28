@@ -20,9 +20,9 @@ dependencies:
   flutter_form_builder: ^6.0.1
   timelines: ^0.1.0
   url_launcher: ^6.1.5
-  pdfx: ^2.2.0
   email_validator: ^2.1.16
   http: ^0.13.4
+  syncfusion_flutter_pdfviewer: ^20.2.40-beta
 
 dev_dependencies:
   flutter_test:

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter95/flutter95.dart';
-import 'package:pdfx/pdfx.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class Resume extends StatelessWidget {
   const Resume({super.key});
@@ -17,11 +17,8 @@ class Resume extends StatelessWidget {
   }
 
   Widget ResumeView() {
-    final pdfController = PdfController(
-      document: PdfDocument.openAsset('resume.pdf'),
-    );
-    return PdfView(
-      controller: pdfController,
+    return SfPdfViewer.asset(
+      'resume.pdf',
     );
   }
 }
