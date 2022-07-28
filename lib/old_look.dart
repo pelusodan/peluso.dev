@@ -571,9 +571,20 @@ class _Flutter95State extends State<Flutter95Stateful> {
                             oppositeContentsBuilder: (context, index) =>
                                 Padding(
                               padding: const EdgeInsets.all(20.0),
-                              child: Text(
-                                getTimelineTextFromIndex(index),
-                                textAlign: TextAlign.center,
+                              child: Column(
+                                children: [
+                                  Text(
+                                    getTimelineTextTitleFromIndex(index),
+                                    textAlign: TextAlign.center,
+                                    style: Flutter95.headerTextStyle
+                                        .copyWith(color: Flutter95.headerDark),
+                                  ),
+                                  Text(
+                                    getTimelineTextFromIndex(index),
+                                    textAlign: TextAlign.center,
+                                    style: Flutter95.textStyle,
+                                  ),
+                                ],
                               ),
                             ),
                             contentsBuilder: (context, index) => Image.asset(
@@ -616,12 +627,21 @@ class _Flutter95State extends State<Flutter95Stateful> {
                 builder: TimelineTileBuilder.connectedFromStyle(
                   contentsAlign: ContentsAlign.alternating,
                   oppositeContentsBuilder: (context, index) => Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Text(
-                      getTimelineTextFromIndex(index),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(
+                        children: [
+                          Text(
+                            getTimelineTextTitleFromIndex(index),
+                            textAlign: TextAlign.center,
+                            style: Flutter95.headerTextStyle
+                                .copyWith(color: Flutter95.headerDark),
+                          ),
+                          Text(
+                            getTimelineTextFromIndex(index),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      )),
                   contentsBuilder: (context, index) => Padding(
                     padding: EdgeInsets.all(10),
                     child: Image.asset(
@@ -793,15 +813,32 @@ class _Flutter95State extends State<Flutter95Stateful> {
   String getTimelineTextFromIndex(int index) {
     switch (index) {
       case 0:
-        return "2017-2021\nB.S. in Computer Engineering with a \nMinor in Computer Science";
+        return "B.S. in Computer Engineering with a \nMinor in Computer Science";
       case 1:
-        return "2019\n- Developed data collection \napp and pipeline on Android \n- Refactored unity app to \nAndroid for ALS patients";
+        return "Developed data collection \napp and pipeline on Android \n- Refactored unity app to \nAndroid for ALS patients";
       case 2:
-        return "2020\n- Worked on social media portion \nof Android app with over \n100k users impacted";
+        return "Worked on social media portion \nof Android app with over \n100k users impacted";
       case 3:
-        return "2021\n- Built new consumer facing \ndevice interface using \nCompose and KMP";
+        return "Built new consumer facing \ndevice interface using \nCompose and KMP";
       case 4:
-        return "2021-2022\n- \"Smart Alarm\" sleep planning system\n- Maintained testing pipeline \n and improved internal architecture\n- Used clean architecture with Compose \nand Coroutines for the sleep details screen";
+        return "\"Smart Alarm\" sleep planning system\n- Maintained testing pipeline \n and improved internal architecture\n- Used clean architecture with Compose \nand Coroutines for the sleep details screen";
+      default:
+        return "ah fuck";
+    }
+  }
+
+  String getTimelineTextTitleFromIndex(int index) {
+    switch (index) {
+      case 0:
+        return "2017-2021";
+      case 1:
+        return "2019";
+      case 2:
+        return "2020";
+      case 3:
+        return "2021";
+      case 4:
+        return "2021-2022";
       default:
         return "ah fuck";
     }
