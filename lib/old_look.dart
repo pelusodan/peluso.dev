@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter95/flutter95.dart';
+import 'package:pelusodan_dev/email_utils.dart';
 import 'package:pelusodan_dev/project.dart';
 import 'package:pelusodan_dev/resume.dart';
 import 'package:pelusodan_dev/tech.dart';
@@ -500,20 +501,36 @@ class _Flutter95State extends State<Flutter95Stateful> {
               )),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Center(
             child: Button95(
-              onTap: () {
+              onTap: () async {
                 // first check for field formatting
                 if (EmailValidator.validate(emailController.value.text)) {
                   // show 'sent!' snackbar
-                  //TODO actually make the web call
-                  showSuccessDialog95(
-                      context: context,
-                      title: "Message Sent",
-                      message: "Expect a response soon!");
+                  final response = await sendEmail(
+                    name: nameController.value.text,
+                    email: emailController.value.text,
+                    message: messageController.value.text,
+                    subject: subjectController.value.text,
+                  );
+                  if (response == 200) {
+                    showSuccessDialog95(
+                        context: context,
+                        title: "Message Sent",
+                        message: "Expect a response soon!");
+                    nameController.clear();
+                    emailController.clear();
+                    messageController.clear();
+                    subjectController.clear();
+                  } else {
+                    showDialog95(
+                        context: context,
+                        title: "Server Error",
+                        message: "Please try again later");
+                  }
                 } else {
                   // show 'cannot send' snackbar
                   showDialog95(
