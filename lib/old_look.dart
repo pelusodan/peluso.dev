@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -8,6 +9,7 @@ import 'package:flutter95/flutter95.dart';
 import 'package:pelusodan_dev/project.dart';
 import 'package:pelusodan_dev/resume.dart';
 import 'package:pelusodan_dev/tech.dart';
+import 'package:pelusodan_dev/windows_dialog.dart';
 import 'package:timelines/timelines.dart';
 import 'dart:js' as js;
 
@@ -369,7 +371,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
                     height: height,
                     child: Scaffold95(
                       title: "Contact Me",
-                      body: buildContactMeForm(),
+                      body: buildContactMeForm(height: height),
                     )),
               ],
             ),
@@ -433,82 +435,101 @@ class _Flutter95State extends State<Flutter95Stateful> {
   final messageController = TextEditingController();
   final subjectController = TextEditingController();
 
-  Widget buildContactMeForm() {
+  Widget buildContactMeForm({required double height}) {
     return Container(
       margin: const EdgeInsets.all(20),
-      child: Column(children: [
-        Row(
-          children: [
-            Text("name",
-                style:
-                    Flutter95.textStyle.copyWith(fontWeight: FontWeight.bold)),
-            Expanded(
-                child: Container(
-              child: TextField95(
-                controller: nameController,
-              ),
-              margin: const EdgeInsets.all(10),
-            )),
-          ],
-        ),
-        Row(
-          children: [
-            Text("email",
-                style:
-                    Flutter95.textStyle.copyWith(fontWeight: FontWeight.bold)),
-            Expanded(
-                child: Container(
-              child: TextField95(
-                controller: emailController,
-              ),
-              margin: const EdgeInsets.all(10),
-            )),
-          ],
-        ),
-        Row(
-          children: [
-            Text("subject",
-                style:
-                    Flutter95.textStyle.copyWith(fontWeight: FontWeight.bold)),
-            Expanded(
-                child: Container(
-              child: TextField95(
-                controller: subjectController,
-              ),
-              margin: const EdgeInsets.all(10),
-            )),
-          ],
-        ),
-        Row(
-          children: [
-            Text("message",
-                style:
-                    Flutter95.textStyle.copyWith(fontWeight: FontWeight.bold)),
-            Expanded(
-                child: Container(
-              child: TextField95(
-                height: 100,
-                maxLines: 5,
-                multiline: true,
-                controller: messageController,
-              ),
-              margin: const EdgeInsets.all(10),
-            )),
-          ],
-        ),
-        Container(
-          margin: const EdgeInsets.all(15),
-          child: Button95(
-            onTap: () {
-              //TODO: Make this send an email to my account
-            },
-            child: Text(
-              'submit',
-              style: Flutter95.textStyle,
-            ),
+      child: SizedBox(
+        height: height - 100,
+        child: ListView(children: [
+          Row(
+            children: [
+              Text("name",
+                  style: Flutter95.textStyle
+                      .copyWith(fontWeight: FontWeight.bold)),
+              Expanded(
+                  child: Container(
+                child: TextField95(
+                  controller: nameController,
+                ),
+                margin: const EdgeInsets.all(10),
+              )),
+            ],
           ),
-        )
-      ]),
+          Row(
+            children: [
+              Text("email",
+                  style: Flutter95.textStyle
+                      .copyWith(fontWeight: FontWeight.bold)),
+              Expanded(
+                  child: Container(
+                child: TextField95(
+                  controller: emailController,
+                ),
+                margin: const EdgeInsets.all(10),
+              )),
+            ],
+          ),
+          Row(
+            children: [
+              Text("subject",
+                  style: Flutter95.textStyle
+                      .copyWith(fontWeight: FontWeight.bold)),
+              Expanded(
+                  child: Container(
+                child: TextField95(
+                  controller: subjectController,
+                ),
+                margin: const EdgeInsets.all(10),
+              )),
+            ],
+          ),
+          Row(
+            children: [
+              Text("message",
+                  style: Flutter95.textStyle
+                      .copyWith(fontWeight: FontWeight.bold)),
+              Expanded(
+                  child: Container(
+                child: TextField95(
+                  height: 100,
+                  maxLines: 5,
+                  multiline: true,
+                  controller: messageController,
+                ),
+                margin: const EdgeInsets.all(10),
+              )),
+            ],
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Center(
+            child: Button95(
+              onTap: () {
+                // first check for field formatting
+                if (EmailValidator.validate(emailController.value.text)) {
+                  // show 'sent!' snackbar
+                  //TODO actually make the web call
+                  showSuccessDialog95(
+                      context: context,
+                      title: "Message Sent",
+                      message: "Expect a response soon!");
+                } else {
+                  // show 'cannot send' snackbar
+                  showDialog95(
+                      context: context,
+                      title: "Error",
+                      message: "Please enter valid email");
+                }
+              },
+              child: Text(
+                'submit',
+                style: Flutter95.textStyle,
+              ),
+            ),
+          )
+        ]),
+      ),
     );
   }
 
