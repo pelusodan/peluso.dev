@@ -74201,7 +74201,7 @@ A.ms.prototype={
 j(a){return"Project."+this.b}}
 A.vJ.prototype={
 W(a,b){var s=new A.a0o()
-s.a="doc/resume.pdf"
+s.a="assets/doc/resume.pdf"
 return new A.hu("Resume",A.it(new A.E1(s,null),1),null,null)}}
 A.atj.prototype={
 $1(a){var s=null,r=t.w,q=a.a8(r).f.a.a<400?a.a8(r).f.a.a/1.618:a.a8(r).f.a.a/3
