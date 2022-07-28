@@ -18,7 +18,7 @@ class Resume extends StatelessWidget {
 
   Widget ResumeView() {
     return SfPdfViewer.asset(
-      'resume.pdf',
+      'doc/resume.pdf',
     );
   }
 }

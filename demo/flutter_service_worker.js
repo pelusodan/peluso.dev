@@ -4,16 +4,16 @@ const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
   "version.json": "1633bc80f3ba3e87235ea58b8de8dd9e",
-"index.html": "1b5940e3d635cac1c1ed371c08646806",
-"/": "1b5940e3d635cac1c1ed371c08646806",
-"main.dart.js": "069e8994add54a54209f2e1949f647c5",
+"index.html": "fb0ee04217b19ee23751f457185ec174",
+"/": "fb0ee04217b19ee23751f457185ec174",
+"main.dart.js": "100dc7a567c79f2095ac0f22d8fbb2f0",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
 "icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
 "icons/Icon-maskable-192.png": "c457ef57daa1d16f64b27b786ec2ea3c",
 "icons/Icon-maskable-512.png": "301a7604d45b3e739efc881eb04896ea",
 "icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
 "manifest.json": "d7bdd2ec6a7d608855cdfd29e3318762",
-"assets/AssetManifest.json": "15a316a4638e013828d666d6c775727f",
+"assets/AssetManifest.json": "bc8493dec274e831efe18a1d51395467",
 "assets/NOTICES": "e9ccfbe64adabd75deda2416a3a979f4",
 "assets/FontManifest.json": "875104f8b67c4340996c4b6b47b72223",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
@@ -23,7 +23,6 @@ const RESOURCES = {
 "assets/packages/flutter95/icons/icon_error.png": "19c2cb293b0cd882f62109b585d5e1b4",
 "assets/fonts/MaterialIcons-Regular.otf": "95db9098c58fd6db106f1116bae85a0b",
 "assets/fonts/Blockstepped.ttf": "894bfc18e8fd1529415d43a891d78b31",
-"assets/assets/resume.pdf": "0cd9c7b806022965088f92c5a999f9d7",
 "assets/assets/img/mature.png": "3e4c0112544beea2d9654c56efb4794b",
 "assets/assets/img/whoop.png": "4e1c0e66e04f276408ddd413015a9d48",
 "assets/assets/img/feed.png": "706bbd52b1b3b6b9b9a73b35780ac5ac",
@@ -38,7 +37,8 @@ const RESOURCES = {
 "assets/assets/img/missMyTrain.png": "142af3bf5e8ce703631ef15248670207",
 "assets/assets/img/fridgePal.png": "f7715c9bbe5aae9747d94752fd301243",
 "assets/assets/img/austin.png": "2ecff97773815a007356592c969366ff",
-"assets/assets/img/cv.png": "18348f12ec692e597e27601be0b86113"
+"assets/assets/img/cv.png": "18348f12ec692e597e27601be0b86113",
+"assets/assets/doc/resume.pdf": "0cd9c7b806022965088f92c5a999f9d7"
 };
 
 // The application shell files that are downloaded before a service worker can

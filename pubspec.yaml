@@ -49,7 +49,7 @@ flutter:
     - assets/img/missMyTrain.png
     - assets/img/pokemon.png
     - assets/img/walletGuru.png
-    - assets/resume.pdf
+    - assets/doc/resume.pdf
   fonts:
     - family: Blockstepped
       fonts:
