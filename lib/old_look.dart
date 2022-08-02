@@ -116,20 +116,19 @@ class _Flutter95State extends State<Flutter95Stateful> {
         menu: _buildMenu(),
       ),
       Item95(
-        label: 'Edit',
-        onTap: (context) {},
-      ),
-      Item95(
-        label: 'Save',
-        onTap: (context) {},
-      ),
-      Item95(
         label: 'Resume',
         onTap: (context) {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const Resume()),
           );
+        },
+      ),
+      Item95(
+        label: 'FridgePal',
+        onTap: (context) {
+          js.context.callMethod(js.context.callMethod(
+              'open', ['https://www.pelusodan.com/flutter/fridgepal/#/']));
         },
       ),
     ]);
