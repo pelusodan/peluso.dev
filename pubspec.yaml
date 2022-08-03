@@ -50,6 +50,7 @@ flutter:
     - assets/img/pokemon.png
     - assets/img/walletGuru.png
     - assets/doc/resume.pdf
+    - assets/img/daffy.gif
   fonts:
     - family: Blockstepped
       fonts:

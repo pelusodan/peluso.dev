@@ -9,6 +9,7 @@ import 'package:flutter95/flutter95.dart';
 import 'package:pelusodan_dev/email_utils.dart';
 import 'package:pelusodan_dev/project.dart';
 import 'package:pelusodan_dev/resume.dart';
+import 'package:pelusodan_dev/scale_route.dart';
 import 'package:pelusodan_dev/tech.dart';
 import 'package:pelusodan_dev/windows_dialog.dart';
 import 'package:timelines/timelines.dart';
@@ -40,10 +41,11 @@ class _Flutter95State extends State<Flutter95Stateful> {
   /**
    * This keeps track of the windows on our screen
    */
-  List<int> windowIds = [0, 69, 1, 99, 2, 70, 30];
+  List<int> windowIds = [0, 69, 1, 99, 2, 70, 30, 20];
 
   Offset aboutPosition = Offset(100, 100);
   Offset projectPosition = Offset(500, 200);
+  Offset daffyPosition = Offset(300, 100);
   Offset musicPosition = Offset(-150, 800);
   Offset techPosition = Offset(999, 100);
   double prevScale = 1;
@@ -61,6 +63,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
 
   var musicCurrentPage = 0;
   var projectCurrentPage = 0;
+  var daffyEnabled = false;
 
   void updateScale(double zoom) => setState(() => scale = prevScale * zoom);
 
@@ -87,6 +90,12 @@ class _Flutter95State extends State<Flutter95Stateful> {
         projectPosition = newPosition;
         windowIds.remove(70);
         windowIds.add(70);
+      });
+
+  void updateDaffyPosition(Offset newPosition) => setState(() {
+        daffyPosition = newPosition;
+        windowIds.remove(20);
+        windowIds.add(20);
       });
 
   void updateStaticContactPosition() => setState(() {
@@ -118,10 +127,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
       Item95(
         label: 'Resume',
         onTap: (context) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const Resume()),
-          );
+          Navigator.of(context).push(scaleBuilder());
         },
       ),
       Item95(
@@ -170,7 +176,11 @@ class _Flutter95State extends State<Flutter95Stateful> {
       onItemSelected: (item) {
         if (item == 1) {
           js.context.callMethod('open', ['https://pelusodan.com']);
-        } else if (item == 2) {}
+        } else if (item == 2) {
+          onUrlTapped('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
+        } else if (item == 3) {
+          setState(() => {daffyEnabled = !daffyEnabled});
+        }
       },
     );
   }
@@ -200,6 +210,20 @@ class _Flutter95State extends State<Flutter95Stateful> {
       feedback: buildTechContent(),
       childWhenDragging: Container(),
       onDragEnd: (details) => updateTechPosition(details.offset),
+    );
+  }
+
+  Widget buildDaffy() {
+    return Draggable(
+      maxSimultaneousDrags: 1,
+      data: 'daffy_window',
+      child: Transform.scale(
+        scale: scale,
+        child: buildDaffyContent(),
+      ),
+      feedback: buildDaffyContent(),
+      childWhenDragging: Container(),
+      onDragEnd: (details) => updateDaffyPosition(details.offset),
     );
   }
 
@@ -359,6 +383,27 @@ class _Flutter95State extends State<Flutter95Stateful> {
         ));
   }
 
+  Widget buildDaffyContent({double width = 300, double height = 250}) {
+    return Elevation95(
+        type: Elevation95Type.down,
+        child: SingleChildScrollView(
+          child: Stack(
+            children: <Widget>[
+              Container(
+                width: width,
+                height: height,
+                child: Scaffold95(
+                    title: "Fat Daffy in Brighton, UT",
+                    body: Expanded(
+                        child: Center(
+                      child: Image.asset('assets/img/daffy.gif'),
+                    ))),
+              )
+            ],
+          ),
+        ));
+  }
+
   Widget buildContactMeContent({double width = 500, double height = 500}) {
     return GestureDetector(
       child: Elevation95(
@@ -424,6 +469,12 @@ class _Flutter95State extends State<Flutter95Stateful> {
         child: buildContactMeContent(),
         bottom: 50,
         right: 20,
+      );
+    } else if (e == 20 && daffyEnabled) {
+      return Positioned(
+        child: buildDaffy(),
+        left: daffyPosition.dx,
+        top: daffyPosition.dy - verticalOffset,
       );
     } else {
       return Container();
@@ -676,7 +727,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
     js.context.callMethod('open', [album.url]);
   }
 
-  Widget buildMusicContent({double width = 400, double height = 300}) {
+  Widget buildMusicContent({double width = 400, double height = 350}) {
     final PageController musicPageController =
         PageController(initialPage: musicCurrentPage);
     return Elevation95(
@@ -701,20 +752,20 @@ class _Flutter95State extends State<Flutter95Stateful> {
                             child: buildAlbumContent(
                                 "Common Vice",
                                 'assets/img/cv.png',
-                                "Common Vice is a collaborative project between myself and my bandmate Adrian Duffey. I recorded drums, guitar, vocals, and bass on 10 tracks about the college experience.",
+                                "Common Vice is a collaborative project between myself and my good friend Adrian Duffey. I recorded drums, guitar, vocals, and bass on 10 tracks about the city college experience.",
                                 Album.commonVice)),
                         Center(
                           child: buildAlbumContent(
                               "Austin",
                               'assets/img/austin.png',
-                              "Austin is a solo project I worked on in the beginning of the pandemic. It was written in a weekend trip to the city with only 1 pair of jeans and a guitar on my back.",
+                              "Austin is a solo project I worked on in the beginning of the pandemic. It was written in a weekend trip to the city with the intention of chronicling an adventure.",
                               Album.austin),
                         ),
                         Center(
                           child: buildAlbumContent(
                               "Mature",
                               'assets/img/mature.png',
-                              "Mature is my first recorded project, comprised of songs I wrote from 7th grade until my freshman year of college. Most tracks are acoustic only, and tell stories about my upbringing.",
+                              "Mature is my first recorded project, comprised of songs I wrote from 7th grade until my freshman year of college. Most tracks are acoustic only, and tell stories about growing up.",
                               Album.mature),
                         )
                       ],
@@ -788,10 +839,13 @@ class _Flutter95State extends State<Flutter95Stateful> {
                   height: 150,
                 ),
               ),
+              Expanded(child: SizedBox.shrink()),
               Text(
                 body,
                 style: Flutter95.textStyle,
-              )
+                textAlign: TextAlign.center,
+              ),
+              Expanded(child: SizedBox.shrink()),
             ],
           ),
         ));
@@ -818,15 +872,15 @@ class _Flutter95State extends State<Flutter95Stateful> {
   String getTimelineTextFromIndex(int index) {
     switch (index) {
       case 0:
-        return "B.S. in Computer Engineering with a \nMinor in Computer Science";
+        return "Computer Engineering \nComputer Science";
       case 1:
-        return "Developed data collection \napp and pipeline on Android \n- Refactored unity app to \nAndroid for ALS patients";
+        return "- Developed data collection \napp and pipeline on Android \n- Refactored unity app to \nAndroid for ALS patients";
       case 2:
-        return "Worked on social media portion \nof Android app with over \n100k users impacted";
+        return "- Worked on social media portion \nof Android app with over \n100k users impacted";
       case 3:
-        return "Built new consumer facing \ndevice interface using \nCompose and KMP";
+        return "- Built new consumer facing \ndevice interface using \nCompose and KMP";
       case 4:
-        return "\"Smart Alarm\" sleep planning system\n- Maintained testing pipeline \n and improved internal architecture\n- Used clean architecture with Compose \nand Coroutines for the sleep details screen";
+        return "- Smart Alarm sleep planning system\n- Maintained testing pipeline \n and improved internal architecture\n- Used clean architecture with Compose \nand Coroutines for the sleep details screen";
       default:
         return "ah fuck";
     }
@@ -916,6 +970,12 @@ class _Flutter95State extends State<Flutter95Stateful> {
             child: ListView(
               padding: EdgeInsets.all(10),
               children: [
+                daffyEnabled
+                    ? buildDaffyContent(width: screenWidth)
+                    : const SizedBox.shrink(),
+                daffyEnabled
+                    ? const SizedBox(height: 20)
+                    : const SizedBox.shrink(),
                 buildAboutWindowContent(
                   width: screenWidth,
                 ),
@@ -938,5 +998,9 @@ class _Flutter95State extends State<Flutter95Stateful> {
         ],
       ),
     );
+  }
+
+  Route scaleBuilder() {
+    return ScaleRoute(page: const Resume());
   }
 }
