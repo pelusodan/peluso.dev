@@ -331,7 +331,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
         ));
   }
 
-  Widget buildTechContent({double width = 300, double height = 375}) {
+  Widget buildTechContent({double width = 300, double height = 450}) {
     return Elevation95(
         type: Elevation95Type.down,
         child: SingleChildScrollView(
@@ -601,7 +601,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
   }
 
   Widget buildTimelineContent(
-      {required bool isVertical, double width = 1300, double height = 400}) {
+      {required bool isVertical, double width = 1700, double height = 400}) {
     return Elevation95(
         type: Elevation95Type.down,
         child: SingleChildScrollView(
@@ -649,7 +649,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
                                 ConnectorStyle.solidLine,
                             indicatorStyleBuilder: (context, index) =>
                                 IndicatorStyle.dot,
-                            itemCount: 5,
+                            itemCount: 6,
                           ),
                           theme: TimelineThemeData(
                             color: Flutter95.headerDark,
@@ -709,7 +709,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
                   connectorStyleBuilder: (context, index) =>
                       ConnectorStyle.solidLine,
                   indicatorStyleBuilder: (context, index) => IndicatorStyle.dot,
-                  itemCount: 5,
+                  itemCount: 6,
                 ),
                 theme: TimelineThemeData(
                   color: Flutter95.headerDark,
@@ -852,7 +852,6 @@ class _Flutter95State extends State<Flutter95Stateful> {
   }
 
   String getImagePathFromTimelineIndex(int index) {
-    //return "assets/img/austin.png";
     switch (index) {
       case 0:
         return "assets/img/neu.png";
@@ -864,6 +863,8 @@ class _Flutter95State extends State<Flutter95Stateful> {
         return "assets/img/pison.png";
       case 4:
         return "assets/img/whoop.png";
+      case 5:
+        return "assets/img/peloton.png";
       default:
         return "assets/img/austin.png";
     }
@@ -881,6 +882,8 @@ class _Flutter95State extends State<Flutter95Stateful> {
         return "- Built new consumer facing \ndevice interface using \nCompose and KMP";
       case 4:
         return "- Smart Alarm sleep planning system\n- Maintained testing pipeline \n and improved internal architecture\n- Used clean architecture with Compose \nand Coroutines for the sleep details screen";
+      case 5:
+        return "- Improved commercial device experience\n- Established Jetpack Compose infrastructure \nand initial scoping\n- Removed and replaced legacy code flows \nfor the Peloton tablet with modern MVVM";
       default:
         return "ah fuck";
     }
@@ -898,6 +901,8 @@ class _Flutter95State extends State<Flutter95Stateful> {
         return "2021";
       case 4:
         return "2021-2022";
+      case 5:
+        return "2022-";
       default:
         return "ah fuck";
     }
@@ -987,7 +992,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
                 buildTechContent(width: screenWidth),
                 const SizedBox(height: 20),
                 buildTimelineContentMobile(
-                    isVertical: true, width: screenWidth, height: 1100),
+                    isVertical: true, width: screenWidth, height: 1400),
                 const SizedBox(height: 20),
                 buildContactMeContent(width: screenWidth),
                 const SizedBox(height: 20),
