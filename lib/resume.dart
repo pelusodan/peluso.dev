@@ -19,6 +19,7 @@ class Resume extends StatelessWidget {
   Widget ResumeView() {
     return SfPdfViewer.asset(
       'assets/doc/resume.pdf',
+      enableTextSelection: true,
     );
   }
 }

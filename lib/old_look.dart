@@ -1,19 +1,16 @@
-import 'dart:developer';
+import 'dart:js' as js;
 
 import 'package:email_validator/email_validator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter95/flutter95.dart';
 import 'package:pelusodan_dev/email_utils.dart';
+import 'package:pelusodan_dev/presentations.dart';
 import 'package:pelusodan_dev/project.dart';
 import 'package:pelusodan_dev/resume.dart';
 import 'package:pelusodan_dev/scale_route.dart';
 import 'package:pelusodan_dev/tech.dart';
 import 'package:pelusodan_dev/windows_dialog.dart';
 import 'package:timelines/timelines.dart';
-import 'dart:js' as js;
 
 import 'album.dart';
 
@@ -41,20 +38,18 @@ class _Flutter95State extends State<Flutter95Stateful> {
   /**
    * This keeps track of the windows on our screen
    */
-  List<int> windowIds = [0, 69, 1, 99, 2, 70, 30, 20];
+  List<int> windowIds = [0, 8, 69, 1, 99, 2, 70, 30, 20];
 
   Offset aboutPosition = Offset(100, 100);
   Offset projectPosition = Offset(500, 200);
   Offset daffyPosition = Offset(300, 100);
   Offset musicPosition = Offset(-150, 800);
   Offset techPosition = Offset(999, 100);
+  Offset presentationPosition = Offset(0, 300);
   double prevScale = 1;
   double scale = 1;
 
-  //TODO make some sizes and boolean globals for mobile config on windowws
-  // no contact window on mobile
   // TODO make the window class more generic so we can better add them
-  // TODO get email actually working
   String? currentEmail;
 
   String? currentMessage;
@@ -63,6 +58,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
 
   var musicCurrentPage = 0;
   var projectCurrentPage = 0;
+  var presentationCurrentPage = 0;
   var daffyEnabled = false;
 
   void updateScale(double zoom) => setState(() => scale = prevScale * zoom);
@@ -74,6 +70,9 @@ class _Flutter95State extends State<Flutter95Stateful> {
 
   void setProjectSlidePage(int selection) =>
       setState(() => projectCurrentPage = selection);
+
+  void setPresentationSlidePage(int selection) =>
+      setState(() => presentationCurrentPage = selection);
 
   void updateAboutPosition(Offset newPosition) => setState(() {
         aboutPosition = newPosition;
@@ -91,6 +90,12 @@ class _Flutter95State extends State<Flutter95Stateful> {
         windowIds.remove(70);
         windowIds.add(70);
       });
+
+  void updatePresentationPosition(Offset newPosition) => setState(() {
+    presentationPosition = newPosition;
+    windowIds.remove(8);
+    windowIds.add(8);
+  });
 
   void updateDaffyPosition(Offset newPosition) => setState(() {
         daffyPosition = newPosition;
@@ -250,6 +255,20 @@ class _Flutter95State extends State<Flutter95Stateful> {
     );
   }
 
+  Widget buildPresentations() {
+    return Draggable(
+      maxSimultaneousDrags: 1,
+      data: 'presentations_window',
+      child: Transform.scale(
+        scale: scale,
+        child: buildPresentationContent(),
+      ),
+      feedback: buildPresentationContent(),
+      childWhenDragging: Container(),
+      onDragEnd: (details) => updatePresentationPosition(details.offset),
+    );
+  }
+
   Widget buildMusic() {
     return Draggable(
       maxSimultaneousDrags: 1,
@@ -331,7 +350,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
         ));
   }
 
-  Widget buildTechContent({double width = 300, double height = 450}) {
+  Widget buildTechContent({double width = 300, double height = 430}) {
     return Elevation95(
         type: Elevation95Type.down,
         child: SingleChildScrollView(
@@ -431,7 +450,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
     if (e == 0) {
       return Positioned.fill(
           child: Container(
-        color: Colors.blue,
+        color: Flutter95.secondary,
       ));
     } else if (e == 1) {
       return Positioned(
@@ -469,6 +488,12 @@ class _Flutter95State extends State<Flutter95Stateful> {
         child: buildContactMeContent(),
         bottom: 50,
         right: 20,
+      );
+    } else if (e == 8) {
+      return Positioned(
+        child: buildPresentations(),
+        left: presentationPosition.dx,
+        top: presentationPosition.dy - verticalOffset,
       );
     } else if (e == 20 && daffyEnabled) {
       return Positioned(
@@ -634,7 +659,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
                                   ),
                                   Text(
                                     getTimelineTextFromIndex(index),
-                                    textAlign: TextAlign.center,
+                                    textAlign: TextAlign.left,
                                     style: Flutter95.textStyle,
                                   ),
                                 ],
@@ -817,6 +842,40 @@ class _Flutter95State extends State<Flutter95Stateful> {
         ));
   }
 
+  Widget buildPresentationContent({double width = 400, double height = 300}) {
+    final PageController presentationSlideController =
+        PageController(initialPage: presentationCurrentPage);
+    return Elevation95(
+        type: Elevation95Type.down,
+        child: Stack(
+          children: <Widget>[
+            SizedBox(
+              width: width,
+              height: height,
+              child: Scaffold95(
+                  title: "Presentations",
+                  toolbar: null,
+                  body: Expanded(
+                    child: Scrollbar(
+                      child: PageView(
+                        onPageChanged: (page) {
+                          setPresentationSlidePage(page);
+                        },
+                        controller: presentationSlideController,
+                        children: <Widget>[
+                          for (var presentation in Presentation.values)
+                            buildPresentationPage(presentation)
+                        ],
+                      ),
+                      thumbVisibility: true,
+                      controller: presentationSlideController,
+                    ),
+                  )),
+            )
+          ],
+        ));
+  }
+
   Widget buildAlbumContent(
       String albumName, String albumCoverPath, String body, Album album) {
     return Padding(
@@ -875,15 +934,15 @@ class _Flutter95State extends State<Flutter95Stateful> {
       case 0:
         return "Computer Engineering \nComputer Science";
       case 1:
-        return "- Developed data collection \napp and pipeline on Android \n- Refactored unity app to \nAndroid for ALS patients";
+        return "- Developed data collection \n  app and pipeline on Android \n- Refactored unity app to \n  Android for ALS patients";
       case 2:
-        return "- Worked on social media portion \nof Android app with over \n100k users impacted";
+        return "- Worked on social media portion \n  of Android app with over \n  100k users impacted";
       case 3:
-        return "- Built new consumer facing \ndevice interface using \nCompose and KMP";
+        return "- Built new consumer facing \n  device interface using \n  Compose and KMP";
       case 4:
-        return "- Smart Alarm sleep planning system\n- Maintained testing pipeline \n and improved internal architecture\n- Used clean architecture with Compose \nand Coroutines for the sleep details screen";
+        return "- Smart Alarm sleep planning system\n- Maintained testing pipeline \n  and improved internal architecture\n- Used clean architecture with Compose \n  and Coroutines for the sleep details screen";
       case 5:
-        return "- Improved commercial device experience\n- Established Jetpack Compose infrastructure \nand initial scoping\n- Removed and replaced legacy code flows \nfor the Peloton tablet with modern MVVM";
+        return "- Improved commercial device experience\n- Established Jetpack Compose infrastructure \n  and initial scoping\n- Removed and replaced legacy code flows \n  for the Peloton tablet with modern MVVM";
       default:
         return "ah fuck";
     }
@@ -940,6 +999,59 @@ class _Flutter95State extends State<Flutter95Stateful> {
         ));
   }
 
+  Widget buildPresentationPage(Presentation presentation) {
+    return Padding(
+        padding: const EdgeInsets.all(5.0),
+      child: GestureDetector(
+        onTap: () {
+          if (presentation.link != null) {
+            onUrlTapped(presentation.link!);
+          }
+        },
+        child: Column(
+          children: [
+            Padding(
+                padding: EdgeInsets.only(bottom: 5.0),
+                child: Text(
+                  presentation.title,
+                  textAlign: TextAlign.center,
+                  style: Flutter95.headerTextStyle.copyWith(color: Colors.black),
+                ),
+            ),
+            Expanded(child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Image.asset(
+                  presentation.imgPath,
+                ),
+                Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(7.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            presentation.body,
+                            textAlign: TextAlign.left,
+                            style: Flutter95.textStyle.copyWith(color: Colors.black),
+                          ),
+                          Text(
+                            presentation.conferences.reduce((value, element) => "- " + value + "\n- $element"),
+                            textAlign: TextAlign.left,
+                            style: Flutter95.textStyle.copyWith(color: Colors.black),
+                          )
+                        ],
+                      ),
+                    )
+                )
+              ],
+            )),
+          ],
+        ),
+      ),
+    );
+  }
+
   void onUrlTapped(String repoLink) {
     js.context.callMethod('open', [repoLink]);
   }
@@ -960,14 +1072,14 @@ class _Flutter95State extends State<Flutter95Stateful> {
 
   Widget buildMobilePage(double screenWidth, double screenHeight) {
     return Container(
-      color: Colors.blue,
+      color: Flutter95.secondary,
       width: screenWidth,
       height: screenHeight - 80,
       child: Stack(
         children: [
           Positioned.fill(
               child: Container(
-            color: Colors.blue,
+            color: Flutter95.secondary,
           )),
           SizedBox(
             width: screenWidth,
@@ -990,6 +1102,10 @@ class _Flutter95State extends State<Flutter95Stateful> {
                 ),
                 const SizedBox(height: 20),
                 buildTechContent(width: screenWidth),
+                const SizedBox(height: 20),
+                buildPresentationContent(
+                  width: screenWidth,
+                ),
                 const SizedBox(height: 20),
                 buildTimelineContentMobile(
                     isVertical: true, width: screenWidth, height: 1400),
