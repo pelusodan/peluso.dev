@@ -53,6 +53,8 @@ flutter:
     - assets/img/peloton.png
     - assets/img/droidcon.jpg
     - assets/img/flutterWeb.jpg
+    - assets/img/droidcon2.jpg
+    - assets/img/klaviyo.png
   fonts:
     - family: Blockstepped
       fonts:

@@ -38,14 +38,14 @@ class _Flutter95State extends State<Flutter95Stateful> {
   /**
    * This keeps track of the windows on our screen
    */
-  List<int> windowIds = [0, 8, 69, 1, 99, 2, 70, 30, 20];
+  List<int> windowIds = [0, 70, 69, 1, 99, 2, 8, 30, 20];
 
   Offset aboutPosition = Offset(100, 100);
-  Offset projectPosition = Offset(500, 200);
+  Offset projectPosition = Offset(0, 300);
   Offset daffyPosition = Offset(300, 100);
   Offset musicPosition = Offset(-150, 800);
   Offset techPosition = Offset(999, 100);
-  Offset presentationPosition = Offset(0, 300);
+  Offset presentationPosition = Offset(500, 200);
   double prevScale = 1;
   double scale = 1;
 
@@ -92,10 +92,10 @@ class _Flutter95State extends State<Flutter95Stateful> {
       });
 
   void updatePresentationPosition(Offset newPosition) => setState(() {
-    presentationPosition = newPosition;
-    windowIds.remove(8);
-    windowIds.add(8);
-  });
+        presentationPosition = newPosition;
+        windowIds.remove(8);
+        windowIds.add(8);
+      });
 
   void updateDaffyPosition(Offset newPosition) => setState(() {
         daffyPosition = newPosition;
@@ -626,7 +626,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
   }
 
   Widget buildTimelineContent(
-      {required bool isVertical, double width = 1700, double height = 400}) {
+      {required bool isVertical, double width = 2000, double height = 400}) {
     return Elevation95(
         type: Elevation95Type.down,
         child: SingleChildScrollView(
@@ -645,7 +645,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
                             contentsAlign: ContentsAlign.alternating,
                             oppositeContentsBuilder: (context, index) =>
                                 Padding(
-                              padding: const EdgeInsets.all(20.0),
+                              padding: const EdgeInsets.all(10.0),
                               child: Column(
                                 children: [
                                   Text(
@@ -674,7 +674,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
                                 ConnectorStyle.solidLine,
                             indicatorStyleBuilder: (context, index) =>
                                 IndicatorStyle.dot,
-                            itemCount: 6,
+                            itemCount: 7,
                           ),
                           theme: TimelineThemeData(
                             color: Flutter95.headerDark,
@@ -734,7 +734,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
                   connectorStyleBuilder: (context, index) =>
                       ConnectorStyle.solidLine,
                   indicatorStyleBuilder: (context, index) => IndicatorStyle.dot,
-                  itemCount: 6,
+                  itemCount: 7,
                 ),
                 theme: TimelineThemeData(
                   color: Flutter95.headerDark,
@@ -801,7 +801,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
         ));
   }
 
-  Widget buildProjectContent({double width = 400, double height = 300}) {
+  Widget buildProjectContent({double width = 400, double height = 330}) {
     final PageController projectSlideController =
         PageController(initialPage: projectCurrentPage);
     return Elevation95(
@@ -924,6 +924,8 @@ class _Flutter95State extends State<Flutter95Stateful> {
         return "assets/img/whoop.png";
       case 5:
         return "assets/img/peloton.png";
+      case 6:
+        return "assets/img/klaviyo.png";
       default:
         return "assets/img/austin.png";
     }
@@ -943,6 +945,8 @@ class _Flutter95State extends State<Flutter95Stateful> {
         return "- Smart Alarm sleep planning system\n- Maintained testing pipeline \n  and improved internal architecture\n- Used clean architecture with Compose \n  and Coroutines for the sleep details screen";
       case 5:
         return "- Improved commercial device experience\n- Established Jetpack Compose infrastructure \n  and initial scoping\n- Removed and replaced legacy code flows \n  for the Peloton tablet with modern MVVM";
+      case 6:
+        return "- Working on the Push Notification SDK team!";
       default:
         return "ah fuck";
     }
@@ -961,7 +965,9 @@ class _Flutter95State extends State<Flutter95Stateful> {
       case 4:
         return "2021-2022";
       case 5:
-        return "2022-";
+        return "2022-2024";
+      case 6:
+        return "2024-";
       default:
         return "ah fuck";
     }
@@ -1001,7 +1007,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
 
   Widget buildPresentationPage(Presentation presentation) {
     return Padding(
-        padding: const EdgeInsets.all(5.0),
+      padding: const EdgeInsets.all(5.0),
       child: GestureDetector(
         onTap: () {
           if (presentation.link != null) {
@@ -1011,39 +1017,43 @@ class _Flutter95State extends State<Flutter95Stateful> {
         child: Column(
           children: [
             Padding(
-                padding: EdgeInsets.only(bottom: 5.0),
-                child: Text(
-                  presentation.title,
-                  textAlign: TextAlign.center,
-                  style: Flutter95.headerTextStyle.copyWith(color: Colors.black),
-                ),
+              padding: EdgeInsets.only(bottom: 5.0),
+              child: Text(
+                presentation.title,
+                textAlign: TextAlign.center,
+                style: Flutter95.headerTextStyle.copyWith(color: Colors.black),
+              ),
             ),
-            Expanded(child: Row(
+            Expanded(
+                child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Image.asset(
-                  presentation.imgPath,
-                ),
+                if (presentation.imgPath != null)
+                  Image.asset(
+                    presentation.imgPath!,
+                  ),
                 Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.all(7.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            presentation.body,
-                            textAlign: TextAlign.left,
-                            style: Flutter95.textStyle.copyWith(color: Colors.black),
-                          ),
-                          Text(
-                            presentation.conferences.reduce((value, element) => "- " + value + "\n- $element"),
-                            textAlign: TextAlign.left,
-                            style: Flutter95.textStyle.copyWith(color: Colors.black),
-                          )
-                        ],
+                  padding: const EdgeInsets.all(7.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        presentation.body,
+                        textAlign: TextAlign.left,
+                        style:
+                            Flutter95.textStyle.copyWith(color: Colors.black),
                       ),
-                    )
-                )
+                      Text(
+                        presentation.conferences.reduce(
+                            (value, element) => "- " + value + "\n- $element"),
+                        textAlign: TextAlign.left,
+                        style:
+                            Flutter95.textStyle.copyWith(color: Colors.black),
+                      )
+                    ],
+                  ),
+                ))
               ],
             )),
           ],
@@ -1097,18 +1107,18 @@ class _Flutter95State extends State<Flutter95Stateful> {
                   width: screenWidth,
                 ),
                 const SizedBox(height: 20),
-                buildProjectContent(
-                  width: screenWidth,
-                ),
-                const SizedBox(height: 20),
-                buildTechContent(width: screenWidth),
-                const SizedBox(height: 20),
                 buildPresentationContent(
                   width: screenWidth,
                 ),
                 const SizedBox(height: 20),
                 buildTimelineContentMobile(
-                    isVertical: true, width: screenWidth, height: 1400),
+                    isVertical: true, width: screenWidth, height: 1600),
+                const SizedBox(height: 20),
+                buildTechContent(width: screenWidth, height: 450),
+                const SizedBox(height: 20),
+                buildProjectContent(
+                  width: screenWidth,
+                ),
                 const SizedBox(height: 20),
                 buildContactMeContent(width: screenWidth),
                 const SizedBox(height: 20),
