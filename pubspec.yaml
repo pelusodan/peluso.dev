@@ -55,6 +55,7 @@ flutter:
     - assets/img/flutterWeb.jpg
     - assets/img/droidcon2.jpg
     - assets/img/klaviyo.png
+    - assets/img/droidcon3.jpg
   fonts:
     - family: Blockstepped
       fonts:

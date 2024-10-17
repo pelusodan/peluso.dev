@@ -1,11 +1,10 @@
 enum Presentation {
-  /*androidMentors(
-    "The Critical Need for More Android Mentors",
-    "A brief history of mobile development as a career and a guide to mentorship in the space",
-    null,
-    null,
-    ["scheduled Droidcon NYC 2024"]
-  ),*/
+  androidMentors(
+      "The Critical Need for More Android Mentors",
+      "A brief history of mobile development as a career, jazz subgenres, and a guide to mentorship in the space",
+      "assets/img/droidcon3.jpg",
+      null,
+      ["Droidcon NYC 2024"]),
   moduleMayhem(
       "Module Mayhem: Tales from Shared Business Logic",
       "Shared stories of enterprise module code refactors and highlighted solutions to common code sharing issues",
