@@ -56,6 +56,8 @@ flutter:
     - assets/img/droidcon2.jpg
     - assets/img/klaviyo.png
     - assets/img/droidcon3.jpg
+    - assets/img/devfest_yyc.jpg
+    - assets/img/spider_water.jpg
   fonts:
     - family: Blockstepped
       fonts:

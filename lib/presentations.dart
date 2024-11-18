@@ -1,9 +1,15 @@
 enum Presentation {
+  imperitiveDeclarative(
+      "The Imperative Declarative: Why UI Development Has Changed",
+      "The evolution of declarative UI and functional programming, and a guide to making library decisions in software leadership.",
+      "assets/img/devfest_yyc.jpg",
+      null,
+      ["DevFest YYC 2024"]),
   androidMentors(
       "The Critical Need for More Android Mentors",
       "A brief history of mobile development as a career, jazz subgenres, and a guide to mentorship in the space",
       "assets/img/droidcon3.jpg",
-      null,
+      "https://www.droidcon.com/2024/10/17/the-critical-need-for-more-android-mentors/",
       ["Droidcon NYC 2024"]),
   moduleMayhem(
       "Module Mayhem: Tales from Shared Business Logic",

@@ -775,6 +775,12 @@ class _Flutter95State extends State<Flutter95Stateful> {
                       children: <Widget>[
                         Center(
                             child: buildAlbumContent(
+                                "Spider Water",
+                                'assets/img/spider_water.jpg',
+                                "Spider Water is a synth indie-rock collective based out of Cambridge MA. Our debut album is currently available on all streaming services.",
+                                Album.spiderWater)),
+                        Center(
+                            child: buildAlbumContent(
                                 "Common Vice",
                                 'assets/img/cv.png',
                                 "Common Vice is a collaborative project between myself and my good friend Adrian Duffey. I recorded drums, guitar, vocals, and bass on 10 tracks about the city college experience.",
