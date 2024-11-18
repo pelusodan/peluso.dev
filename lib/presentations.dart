@@ -1,7 +1,7 @@
 enum Presentation {
   imperitiveDeclarative(
       "The Imperative Declarative: Why UI Development Has Changed",
-      "The evolution of declarative UI and functional programming, and a guide to making library decisions in software leadership.",
+      "The evolution of declarative UI and functional programming, and a lesson about making library decisions in software leadership.",
       "assets/img/devfest_yyc.jpg",
       null,
       ["DevFest YYC 2024"]),

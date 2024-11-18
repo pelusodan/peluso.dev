@@ -198,7 +198,13 @@ class _Flutter95State extends State<Flutter95Stateful> {
         scale: scale,
         child: buildAboutWindowContent(),
       ),
-      feedback: buildAboutWindowContent(),
+      feedback: Material(
+        type: MaterialType.transparency,
+        child: Transform.scale(
+          scale: scale,
+          child: buildAboutWindowContent(),
+        ),
+      ),
       childWhenDragging: Container(),
       onDragEnd: (details) => updateAboutPosition(details.offset),
     );
@@ -212,7 +218,13 @@ class _Flutter95State extends State<Flutter95Stateful> {
         scale: scale,
         child: buildTechContent(),
       ),
-      feedback: buildTechContent(),
+      feedback: Material(
+        type: MaterialType.transparency,
+        child: Transform.scale(
+          scale: scale,
+          child: buildTechContent(),
+        ),
+      ),
       childWhenDragging: Container(),
       onDragEnd: (details) => updateTechPosition(details.offset),
     );
@@ -249,7 +261,13 @@ class _Flutter95State extends State<Flutter95Stateful> {
         scale: scale,
         child: buildProjectContent(),
       ),
-      feedback: buildProjectContent(),
+      feedback: Material(
+        type: MaterialType.transparency,
+        child: Transform.scale(
+          scale: scale,
+          child: buildProjectContent(),
+        ),
+      ),
       childWhenDragging: Container(),
       onDragEnd: (details) => updateProjectPosition(details.offset),
     );
@@ -263,7 +281,13 @@ class _Flutter95State extends State<Flutter95Stateful> {
         scale: scale,
         child: buildPresentationContent(),
       ),
-      feedback: buildPresentationContent(),
+      feedback: Material(
+        type: MaterialType.transparency,
+        child: Transform.scale(
+          scale: scale,
+          child: buildPresentationContent(),
+        ),
+      ),
       childWhenDragging: Container(),
       onDragEnd: (details) => updatePresentationPosition(details.offset),
     );
@@ -277,7 +301,13 @@ class _Flutter95State extends State<Flutter95Stateful> {
         scale: scale,
         child: buildMusicContent(),
       ),
-      feedback: buildMusicContent(),
+      feedback: Material(
+        type: MaterialType.transparency,
+        child: Transform.scale(
+          scale: scale,
+          child: buildMusicContent(),
+        ),
+      ),
       childWhenDragging: Container(),
       onDragEnd: (details) => updateMusicPosition(details.offset),
     );
