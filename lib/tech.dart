@@ -4,16 +4,16 @@ final Map<String, String> techMap = {
   "Tech": "Experience",
   "Android": "***",
   "Kotlin": "***",
-  "Coroutines": "***",
   "Flutter": "**",
   "Compose": "***",
   "Swift / iOS": "*",
+  "React Native": "**",
+  "Typescript": "*",
   "Java": "***",
-  "Python": "**",
-  "BLE": "*",
+  "Python": "***",
   "SQL": "*",
   "Firebase": "**",
   "Roboelectric": "*",
-  "Figma":"*",
-  "Github Actions + Pages":"**"
+  "Figma": "*",
+  "Github Actions": "**"
 };

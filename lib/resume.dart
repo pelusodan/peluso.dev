@@ -20,6 +20,7 @@ class Resume extends StatelessWidget {
     return SfPdfViewer.asset(
       'assets/doc/resume.pdf',
       enableTextSelection: true,
+      enableDoubleTapZooming: true,
     );
   }
 }
