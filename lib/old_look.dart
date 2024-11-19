@@ -138,8 +138,8 @@ class _Flutter95State extends State<Flutter95Stateful> {
       Item95(
         label: 'FridgePal',
         onTap: (context) {
-          js.context.callMethod(js.context.callMethod(
-              'open', ['https://www.pelusodan.com/flutter/fridgepal/#/']));
+          js.context.callMethod(
+              'open', ['https://www.pelusodan.com/flutter/fridgepal/#/']);
         },
       ),
     ]);
@@ -155,7 +155,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
           title: 'peluso.dev',
           toolbar: mainToolbar(),
           body: screenWidth <
-                  450 // check if we should render mobile version of site
+                  600 // check if we should render mobile version of site
               ? buildMobilePage(screenWidth, screenHeight) // mobile version
               : buildDesktopPage(screenWidth, screenHeight) // desktop version
           ),
@@ -198,7 +198,13 @@ class _Flutter95State extends State<Flutter95Stateful> {
         scale: scale,
         child: buildAboutWindowContent(),
       ),
-      feedback: buildAboutWindowContent(),
+      feedback: Material(
+        type: MaterialType.transparency,
+        child: Transform.scale(
+          scale: scale,
+          child: buildAboutWindowContent(),
+        ),
+      ),
       childWhenDragging: Container(),
       onDragEnd: (details) => updateAboutPosition(details.offset),
     );
@@ -212,7 +218,13 @@ class _Flutter95State extends State<Flutter95Stateful> {
         scale: scale,
         child: buildTechContent(),
       ),
-      feedback: buildTechContent(),
+      feedback: Material(
+        type: MaterialType.transparency,
+        child: Transform.scale(
+          scale: scale,
+          child: buildTechContent(),
+        ),
+      ),
       childWhenDragging: Container(),
       onDragEnd: (details) => updateTechPosition(details.offset),
     );
@@ -249,7 +261,13 @@ class _Flutter95State extends State<Flutter95Stateful> {
         scale: scale,
         child: buildProjectContent(),
       ),
-      feedback: buildProjectContent(),
+      feedback: Material(
+        type: MaterialType.transparency,
+        child: Transform.scale(
+          scale: scale,
+          child: buildProjectContent(),
+        ),
+      ),
       childWhenDragging: Container(),
       onDragEnd: (details) => updateProjectPosition(details.offset),
     );
@@ -263,7 +281,13 @@ class _Flutter95State extends State<Flutter95Stateful> {
         scale: scale,
         child: buildPresentationContent(),
       ),
-      feedback: buildPresentationContent(),
+      feedback: Material(
+        type: MaterialType.transparency,
+        child: Transform.scale(
+          scale: scale,
+          child: buildPresentationContent(),
+        ),
+      ),
       childWhenDragging: Container(),
       onDragEnd: (details) => updatePresentationPosition(details.offset),
     );
@@ -277,13 +301,19 @@ class _Flutter95State extends State<Flutter95Stateful> {
         scale: scale,
         child: buildMusicContent(),
       ),
-      feedback: buildMusicContent(),
+      feedback: Material(
+        type: MaterialType.transparency,
+        child: Transform.scale(
+          scale: scale,
+          child: buildMusicContent(),
+        ),
+      ),
       childWhenDragging: Container(),
       onDragEnd: (details) => updateMusicPosition(details.offset),
     );
   }
 
-  Widget buildAboutWindowContent({double width = 500, double height = 300}) {
+  Widget buildAboutWindowContent({double width = 350, double height = 300}) {
     return Elevation95(
         type: Elevation95Type.down,
         child: SingleChildScrollView(
@@ -302,7 +332,6 @@ class _Flutter95State extends State<Flutter95Stateful> {
                             items: [
                               MenuItem95(value: 1, label: 'github'),
                               MenuItem95(value: 2, label: 'linkedin'),
-                              MenuItem95(value: 3, label: 'twitter')
                             ],
                             onItemSelected: (item) {
                               switch (item) {
@@ -319,12 +348,6 @@ class _Flutter95State extends State<Flutter95Stateful> {
                                     ]);
                                   }
                                   break;
-                                case 3:
-                                  {
-                                    js.context.callMethod('open',
-                                        ['https://twitter.com/DanPeluso2']);
-                                  }
-                                  break;
                               }
                             }),
                       )
@@ -338,7 +361,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
                         height: 190,
                       ),
                       Text(
-                        'mobile developer \nhardware engineer \nmusician',
+                        'frontend developer \npublic speaker \nsongwriter',
                         style: Flutter95.textStyle,
                       )
                     ],
@@ -350,7 +373,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
         ));
   }
 
-  Widget buildTechContent({double width = 300, double height = 430}) {
+  Widget buildTechContent({double width = 300, double height = 460}) {
     return Elevation95(
         type: Elevation95Type.down,
         child: SingleChildScrollView(
@@ -625,70 +648,95 @@ class _Flutter95State extends State<Flutter95Stateful> {
     );
   }
 
-  Widget buildTimelineContent(
-      {required bool isVertical, double width = 2000, double height = 400}) {
-    return Elevation95(
-        type: Elevation95Type.down,
-        child: SingleChildScrollView(
-          child: Stack(
-            children: <Widget>[
-              Container(
-                width: width,
+  Widget buildTimelineContent({
+    required bool isVertical,
+    double width = 1600,
+    double height = 430,
+  }) {
+    return SingleChildScrollView(
+      // Wrap the entire content with SingleChildScrollView
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          // Constrain the child width to prevent unnecessary overflow
+          ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: width),
+            child: Elevation95(
+              type: Elevation95Type.down,
+              child: Container(
                 height: height,
                 child: Scaffold95(
-                    title: "Career",
-                    body: Expanded(
+                  title: "Career",
+                  body: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minWidth: width,
+                        maxWidth: width,
+                      ),
+                      child: IntrinsicHeight(
                         child: Row(
-                      children: [
-                        FixedTimeline.tileBuilder(
-                          builder: TimelineTileBuilder.connectedFromStyle(
-                            contentsAlign: ContentsAlign.alternating,
-                            oppositeContentsBuilder: (context, index) =>
-                                Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Column(
-                                children: [
-                                  Text(
-                                    getTimelineTextTitleFromIndex(index),
-                                    textAlign: TextAlign.center,
-                                    style: Flutter95.headerTextStyle
-                                        .copyWith(color: Flutter95.headerDark),
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Flexible(
+                              child: FixedTimeline.tileBuilder(
+                                builder: TimelineTileBuilder.connectedFromStyle(
+                                  contentsAlign: ContentsAlign.alternating,
+                                  oppositeContentsBuilder: (context, index) =>
+                                      Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          getTimelineTextTitleFromIndex(index),
+                                          textAlign: TextAlign.center,
+                                          style: Flutter95.headerTextStyle
+                                              .copyWith(
+                                            color: Flutter95.headerDark,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 20),
+                                        Text(
+                                          getTimelineTextFromIndex(index),
+                                          textAlign: TextAlign.left,
+                                          style: Flutter95.textStyle,
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                  const SizedBox(
-                                    height: 20,
+                                  contentsBuilder: (context, index) =>
+                                      Image.asset(
+                                    getImagePathFromTimelineIndex(index),
+                                    height: 150,
+                                    width: 150,
                                   ),
-                                  Text(
-                                    getTimelineTextFromIndex(index),
-                                    textAlign: TextAlign.left,
-                                    style: Flutter95.textStyle,
-                                  ),
-                                ],
+                                  connectorStyleBuilder: (context, index) =>
+                                      ConnectorStyle.solidLine,
+                                  indicatorStyleBuilder: (context, index) =>
+                                      IndicatorStyle.dot,
+                                  itemCount: 5,
+                                ),
+                                theme: TimelineThemeData(
+                                  color: Flutter95.headerDark,
+                                  direction: isVertical
+                                      ? Axis.vertical
+                                      : Axis.horizontal,
+                                ),
                               ),
                             ),
-                            contentsBuilder: (context, index) => Image.asset(
-                              getImagePathFromTimelineIndex(index),
-                              height: 150,
-                              width: 150,
-                            ),
-                            connectorStyleBuilder: (context, index) =>
-                                ConnectorStyle.solidLine,
-                            indicatorStyleBuilder: (context, index) =>
-                                IndicatorStyle.dot,
-                            itemCount: 7,
-                          ),
-                          theme: TimelineThemeData(
-                            color: Flutter95.headerDark,
-                            direction:
-                                isVertical ? Axis.vertical : Axis.horizontal,
-                          ),
-                        )
-                      ],
-                      mainAxisAlignment: MainAxisAlignment.center,
-                    ))),
-              )
-            ],
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ),
-        ));
+        ],
+      ),
+    );
   }
 
   Widget buildTimelineContentMobile(
@@ -734,7 +782,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
                   connectorStyleBuilder: (context, index) =>
                       ConnectorStyle.solidLine,
                   indicatorStyleBuilder: (context, index) => IndicatorStyle.dot,
-                  itemCount: 7,
+                  itemCount: 5,
                 ),
                 theme: TimelineThemeData(
                   color: Flutter95.headerDark,
@@ -773,6 +821,12 @@ class _Flutter95State extends State<Flutter95Stateful> {
                       controller: musicPageController,
                       //scrollDirection: Axis.vertical,
                       children: <Widget>[
+                        Center(
+                            child: buildAlbumContent(
+                                "Spider Water",
+                                'assets/img/spider_water.jpg',
+                                "Spider Water is a synth indie-rock collective based out of Cambridge MA. Our debut album is currently available on all streaming services.",
+                                Album.spiderWater)),
                         Center(
                             child: buildAlbumContent(
                                 "Common Vice",
@@ -919,12 +973,8 @@ class _Flutter95State extends State<Flutter95Stateful> {
       case 2:
         return "assets/img/whoop.png";
       case 3:
-        return "assets/img/pison.png";
-      case 4:
-        return "assets/img/whoop.png";
-      case 5:
         return "assets/img/peloton.png";
-      case 6:
+      case 4:
         return "assets/img/klaviyo.png";
       default:
         return "assets/img/austin.png";
@@ -934,18 +984,14 @@ class _Flutter95State extends State<Flutter95Stateful> {
   String getTimelineTextFromIndex(int index) {
     switch (index) {
       case 0:
-        return "Computer Engineering \nComputer Science";
+        return "- Computer Engineering \n- Computer Science";
       case 1:
-        return "- Developed data collection \n  app and pipeline on Android \n- Refactored unity app to \n  Android for ALS patients";
+        return "- Developed data collection app for Android \n- Refactored Unity app to Android for ALS patients\n- Built new consumer facing device interface using \n  Compose and KMP";
       case 2:
-        return "- Worked on social media portion \n  of Android app with over \n  100k users impacted";
-      case 3:
-        return "- Built new consumer facing \n  device interface using \n  Compose and KMP";
-      case 4:
         return "- Smart Alarm sleep planning system\n- Maintained testing pipeline \n  and improved internal architecture\n- Used clean architecture with Compose \n  and Coroutines for the sleep details screen";
-      case 5:
+      case 3:
         return "- Improved commercial device experience\n- Established Jetpack Compose infrastructure \n  and initial scoping\n- Removed and replaced legacy code flows \n  for the Peloton tablet with modern MVVM";
-      case 6:
+      case 4:
         return "- Working on the Push Notification SDK team!";
       default:
         return "ah fuck";
@@ -957,16 +1003,12 @@ class _Flutter95State extends State<Flutter95Stateful> {
       case 0:
         return "2017-2021";
       case 1:
-        return "2019";
+        return "2019-2021";
       case 2:
-        return "2020";
+        return "2020-2022";
       case 3:
-        return "2021";
-      case 4:
-        return "2021-2022";
-      case 5:
         return "2022-2024";
-      case 6:
+      case 4:
         return "2024-";
       default:
         return "ah fuck";
@@ -1112,7 +1154,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
                 ),
                 const SizedBox(height: 20),
                 buildTimelineContentMobile(
-                    isVertical: true, width: screenWidth, height: 1600),
+                    isVertical: true, width: screenWidth, height: 1400),
                 const SizedBox(height: 20),
                 buildTechContent(width: screenWidth, height: 450),
                 const SizedBox(height: 20),

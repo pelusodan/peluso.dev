@@ -1,4 +1,7 @@
 enum Album {
+  spiderWater(
+      "https://open.spotify.com/album/7bzxwIg5XRQwNCrd8gxwEn?si=RPCA3OuwTCKHdKmX7U8A_g"
+  ),
   commonVice(
       "https://open.spotify.com/album/702ahHlBL3mCvggDuL2Ozb?si=xKgWuaP0SIudKhjvOlsgrw"
   ),
