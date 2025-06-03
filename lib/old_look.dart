@@ -10,7 +10,7 @@ import 'package:pelusodan_dev/resume.dart';
 import 'package:pelusodan_dev/scale_route.dart';
 import 'package:pelusodan_dev/tech.dart';
 import 'package:pelusodan_dev/windows_dialog.dart';
-import 'package:timelines/timelines.dart';
+import 'package:timelines_plus/timelines_plus.dart';
 
 import 'album.dart';
 
