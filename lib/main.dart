@@ -1,12 +1,11 @@
 import 'dart:ui';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'dart:js' as js;
 
 import 'package:pelusodan_dev/old_look.dart';
+import 'package:pelusodan_dev/utils.dart';
 
 void main() {
   runApp(const MyApp());
@@ -85,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             minHeight: screenWidth / 20,
                             minWidth: screenWidth / 20),
                         onPressed: () {
-                          js.context.callMethod(
+                          openLink(
                               'open', ['https://github.com/pelusodan']);
                         },
                         icon: FaIcon(FontAwesomeIcons.github,

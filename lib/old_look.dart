@@ -1,5 +1,3 @@
-import 'dart:js' as js;
-
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter95/flutter95.dart';
@@ -9,6 +7,7 @@ import 'package:pelusodan_dev/project.dart';
 import 'package:pelusodan_dev/resume.dart';
 import 'package:pelusodan_dev/scale_route.dart';
 import 'package:pelusodan_dev/tech.dart';
+import 'package:pelusodan_dev/utils.dart';
 import 'package:pelusodan_dev/windows_dialog.dart';
 import 'package:timelines_plus/timelines_plus.dart';
 
@@ -135,13 +134,6 @@ class _Flutter95State extends State<Flutter95Stateful> {
           Navigator.of(context).push(scaleBuilder());
         },
       ),
-      Item95(
-        label: 'FridgePal',
-        onTap: (context) {
-          js.context.callMethod(
-              'open', ['https://www.pelusodan.com/flutter/fridgepal/#/']);
-        },
-      ),
     ]);
   }
 
@@ -167,23 +159,17 @@ class _Flutter95State extends State<Flutter95Stateful> {
       items: [
         MenuItem95(
           value: 1,
-          label: 'Old Website',
-        ),
-        MenuItem95(
-          value: 2,
           label: 'Open',
         ),
         MenuItem95(
-          value: 3,
+          value: 2,
           label: 'Exit',
         ),
       ],
       onItemSelected: (item) {
         if (item == 1) {
-          js.context.callMethod('open', ['https://pelusodan.com']);
-        } else if (item == 2) {
           onUrlTapped('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
-        } else if (item == 3) {
+        } else if (item == 2) {
           setState(() => {daffyEnabled = !daffyEnabled});
         }
       },
@@ -337,13 +323,13 @@ class _Flutter95State extends State<Flutter95Stateful> {
                               switch (item) {
                                 case 1:
                                   {
-                                    js.context.callMethod('open',
+                                    openLink('open',
                                         ['https://github.com/pelusodan']);
                                   }
                                   break;
                                 case 2:
                                   {
-                                    js.context.callMethod('open', [
+                                    openLink('open', [
                                       'https://www.linkedin.com/in/pelusodan/'
                                     ]);
                                   }
@@ -793,11 +779,11 @@ class _Flutter95State extends State<Flutter95Stateful> {
   }
 
   void onRepoTapped() {
-    js.context.callMethod('open', ['https://github.com/pelusodan/WalletGuru']);
+    openLink('open', ['https://github.com/pelusodan/WalletGuru']);
   }
 
   void onAlbumTapped(Album album) {
-    js.context.callMethod('open', [album.url]);
+    openLink('open', [album.url]);
   }
 
   Widget buildMusicContent({double width = 400, double height = 350}) {
@@ -1105,7 +1091,7 @@ class _Flutter95State extends State<Flutter95Stateful> {
   }
 
   void onUrlTapped(String repoLink) {
-    js.context.callMethod('open', [repoLink]);
+    openLink('open', [repoLink]);
   }
 
   Widget buildDesktopPage(double screenWidth, double screenHeight) {
